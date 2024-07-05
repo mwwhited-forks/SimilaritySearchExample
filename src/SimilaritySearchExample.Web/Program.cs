@@ -1,6 +1,5 @@
 ﻿using Eliassen.Common;
 using SimilaritySearchExample.Persistence;
-using SimilaritySearchExample.Web.Extensions;
 using SimilaritySearchExample.Web.Handlers;
 
 namespace SimilaritySearchExample.Web;
@@ -14,7 +13,6 @@ public class Program
         //Add Application Services here
         builder.Services.AddEventQueueHandlers();
         builder.Services.AddApplicationDatabase(builder.Configuration);
-        builder.Services.AddApplicationBlobContainers();
 
         // Add services to the container.
 

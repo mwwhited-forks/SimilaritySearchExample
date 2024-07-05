@@ -1,9 +1,9 @@
-﻿using GreenOnion.Entities.Models;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using SimilaritySearchExample.Persistence;
 
 namespace SimilaritySearchExample.Dataloader;
 
@@ -26,7 +26,7 @@ internal class Program
         var services = new ServiceCollection()
             .AddSingleton<IConfiguration>(config)
             .Configure<DataloaderOptions>(options => config.Bind(nameof(DataloaderOptions), options))
-            .AddDbContext<GreenOnionContext>((sp, opt) =>
+            .AddDbContext<ResourceProfilerContext>((sp, opt) =>
                 opt.UseSqlServer(sp.GetRequiredService<IOptions<DataloaderOptions>>().Value.ConnectionString)
 #if DEBUG
                 .EnableSensitiveDataLogging()
