@@ -1,4 +1,4 @@
-﻿namespace ResourceProjectDatabase;
+﻿namespace SimilaritySearchExample.Persistence;
 
 public class Document
 {
@@ -9,9 +9,5 @@ public class Document
 
     public required string ContentType { get; set; }
     public required string ContainerName { get; set; }
-    public required byte[] Content { get; set; }
-
-    public List<DocumentData> Data { get; set; } = [];
-    public List<DocumentVector> Vectors { get; set; } = [];
 }
 

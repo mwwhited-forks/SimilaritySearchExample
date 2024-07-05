@@ -13,4 +13,8 @@
 		<PackageReference Include="Eliassen.Common.Complete" Version="0.2.1-dev-ado-ImproveTestingCoverage.31" />
 	</ItemGroup>
 
+	<ItemGroup>
+	  <ProjectReference Include="..\SimilaritySearchExample.Persistence\SimilaritySearchExample.Persistence.csproj" />
+	</ItemGroup>
+
 </Project>

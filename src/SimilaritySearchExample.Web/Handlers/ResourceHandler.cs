@@ -1,9 +1,9 @@
 ﻿using Eliassen.Documents;
 using Eliassen.MessageQueueing;
 using Eliassen.MessageQueueing.Services;
-using ResourceProfiler.Web.Models;
+using SimilaritySearchExample.Web.Models;
 
-namespace ResourceProfiler.Web.Handlers;
+namespace SimilaritySearchExample.Web.Handlers;
 
 public class ResourceHandler : IMessageQueueHandler<Resources>
 {

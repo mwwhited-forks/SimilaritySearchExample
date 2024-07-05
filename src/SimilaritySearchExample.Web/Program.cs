@@ -1,9 +1,9 @@
 ﻿using Eliassen.Common;
-using ResourceProfiler.Web.Extensions;
-using ResourceProfiler.Web.Handlers;
-using ResourceProjectDatabase;
+using SimilaritySearchExample.Persistence;
+using SimilaritySearchExample.Web.Extensions;
+using SimilaritySearchExample.Web.Handlers;
 
-namespace ResourceProfiler.Web;
+namespace SimilaritySearchExample.Web;
 
 public class Program
 {

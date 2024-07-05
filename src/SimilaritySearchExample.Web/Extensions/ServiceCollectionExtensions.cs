@@ -1,12 +1,10 @@
 ﻿using Eliassen.Documents.Containers;
 using Eliassen.MessageQueueing.Services;
-using Eliassen.Search.Semantic;
 using Microsoft.Extensions.DependencyInjection.Extensions;
-using ResourceProfiler.Web.Extensions.Documents.Containers;
-using ResourceProfiler.Web.Extensions.MessageQueueing.Services;
-using ResourceProfiler.Web.Extensions.Search.Semantic;
+using SimilaritySearchExample.Web.Extensions.Documents.Containers;
+using SimilaritySearchExample.Web.Extensions.MessageQueueing.Services;
 
-namespace ResourceProfiler.Web.Extensions;
+namespace SimilaritySearchExample.Web.Extensions;
 
 public static class ServiceCollectionExtensions
 {
@@ -23,8 +21,8 @@ public static class ServiceCollectionExtensions
         services.AddTransient<IMessageReceiverProvider, ApplicationMessageQueueProvider>();
         services.TryAddKeyedTransient<IMessageReceiverProvider, ApplicationMessageQueueProvider>(MessageProviderKey);
 
-        services.AddTransient<IVectorStoreProviderFactory, ApplicationVectorStoreProviderFactory>();
-        services.TryAddKeyedTransient<IVectorStoreProviderFactory, ApplicationVectorStoreProviderFactory>(MessageProviderKey);
+        //services.AddTransient<IVectorStoreProviderFactory, ApplicationVectorStoreProviderFactory>();
+        //services.TryAddKeyedTransient<IVectorStoreProviderFactory, ApplicationVectorStoreProviderFactory>(MessageProviderKey);
 
         return services;
     }

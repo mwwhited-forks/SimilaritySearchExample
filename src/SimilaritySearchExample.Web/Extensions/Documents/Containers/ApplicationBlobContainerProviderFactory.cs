@@ -1,6 +1,6 @@
 ﻿using Eliassen.Documents.Containers;
 
-namespace ResourceProfiler.Web.Extensions.Documents.Containers;
+namespace SimilaritySearchExample.Web.Extensions.Documents.Containers;
 
 public class ApplicationBlobContainerProviderFactory : IBlobContainerProviderFactory
 {

@@ -2,9 +2,9 @@
 using Eliassen.Documents.Models;
 using Eliassen.System.Security.Cryptography;
 using Microsoft.EntityFrameworkCore;
-using ResourceProjectDatabase;
+using SimilaritySearchExample.Persistence;
 
-namespace ResourceProfiler.Web.Extensions.Documents.Containers;
+namespace SimilaritySearchExample.Web.Extensions.Documents.Containers;
 
 public class ApplicationBlobContainerProvider : IBlobContainerProvider
 {

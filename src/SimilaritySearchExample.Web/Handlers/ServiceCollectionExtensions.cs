@@ -1,7 +1,7 @@
 ﻿
 using Eliassen.MessageQueueing;
 
-namespace ResourceProfiler.Web.Handlers;
+namespace SimilaritySearchExample.Web.Handlers;
 
 public static class ServiceCollectionExtensions
 {

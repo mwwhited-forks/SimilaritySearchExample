@@ -13,7 +13,7 @@ using System.Text.Json;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
-namespace ResourceProfiler.Tests;
+namespace SimilaritySearchExample.Tests;
 
 [TestClass]
 public class DataTests
@@ -35,7 +35,7 @@ public class DataTests
             ;
 
         var db = service.GetRequiredService<ResourceProfilerContext>();
-        var targetPath = Path.GetFullPath(Path.Combine(this.TestContext.TestRunDirectory ?? ".", @"..\..\..\data"));
+        var targetPath = Path.GetFullPath(Path.Combine(TestContext.TestRunDirectory ?? ".", @"..\..\..\data"));
         if (!Directory.Exists(targetPath)) Directory.CreateDirectory(targetPath);
 
         var properties = db.GetType().GetProperties(BindingFlags.Public | BindingFlags.Instance | BindingFlags.GetProperty);
@@ -145,7 +145,7 @@ public class DataTests
         };
 
 
-        var targetPath = Path.GetFullPath(Path.Combine(this.TestContext.TestRunDirectory ?? ".", @"..\..\..\data"));
+        var targetPath = Path.GetFullPath(Path.Combine(TestContext.TestRunDirectory ?? ".", @"..\..\..\data"));
         if (!Directory.Exists(targetPath)) Directory.CreateDirectory(targetPath);
 
         var properties = db.GetType().GetProperties(BindingFlags.Public | BindingFlags.Instance | BindingFlags.GetProperty);
@@ -156,7 +156,7 @@ public class DataTests
             var baseType = dbSet.PropertyType.GetGenericArguments()[0];
             var entityType = db.Model.FindEntityType(baseType);
 
-            var hasKeys = false; 
+            var hasKeys = false;
             //TODO: do something to support PGsql
             //entityType?.GetProperties()
             //                      .Where(c => c.IsPrimaryKey())

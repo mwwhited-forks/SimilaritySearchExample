@@ -2,10 +2,10 @@
 using Eliassen.Documents.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using ResourceProfiler.Web.Models;
+using SimilaritySearchExample.Web.Models;
 using System.Net;
 
-namespace Eliassen.WebApi.Controllers;
+namespace SimilaritySearchExample.Web.Controllers;
 
 [AllowAnonymous]
 [Route("[Controller]/[Action]")]

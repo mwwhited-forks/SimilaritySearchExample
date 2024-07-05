@@ -1,9 +1,9 @@
 ﻿using Eliassen.MessageQueueing.Services;
 using Eliassen.System.Text.Json.Serialization;
 using Microsoft.EntityFrameworkCore;
-using ResourceProjectDatabase;
+using SimilaritySearchExample.Persistence;
 
-namespace ResourceProfiler.Web.Extensions.MessageQueueing.Services;
+namespace SimilaritySearchExample.Web.Extensions.MessageQueueing.Services;
 
 public class ApplicationMessageQueueProvider : IMessageReceiverProvider, IMessageSenderProvider
 {

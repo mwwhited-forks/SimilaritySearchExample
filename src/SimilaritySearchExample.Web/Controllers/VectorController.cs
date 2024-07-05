@@ -3,10 +3,10 @@ using Eliassen.Search;
 using Eliassen.Search.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using ResourceProfiler.Web.Models;
+using SimilaritySearchExample.Web.Models;
 using System.Net;
 
-namespace ResourceProfiler.Web.Controllers;
+namespace SimilaritySearchExample.Web.Controllers;
 
 [AllowAnonymous]
 [Route("[Controller]/[Action]")]

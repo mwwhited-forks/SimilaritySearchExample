@@ -1,4 +1,4 @@
-﻿namespace ResourceProfiler.Web.Models;
+﻿namespace SimilaritySearchExample.Web.Models;
 
 public record ResourceReference
 {

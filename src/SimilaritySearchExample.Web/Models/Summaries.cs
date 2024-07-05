@@ -1,3 +1,3 @@
-﻿namespace ResourceProfiler.Web.Models;
+﻿namespace SimilaritySearchExample.Web.Models;
 
 public class Summaries { }

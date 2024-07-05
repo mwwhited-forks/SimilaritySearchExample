@@ -5,10 +5,10 @@ using Eliassen.MessageQueueing;
 using Eliassen.MessageQueueing.Services;
 using Eliassen.Search;
 using Eliassen.System.Security.Cryptography;
-using ResourceProfiler.Web.Models;
+using SimilaritySearchExample.Web.Models;
 using System.Runtime.InteropServices;
 
-namespace ResourceProfiler.Web.Handlers;
+namespace SimilaritySearchExample.Web.Handlers;
 
 public class IndexerHandler : IMessageQueueHandler<Indexer>
 {

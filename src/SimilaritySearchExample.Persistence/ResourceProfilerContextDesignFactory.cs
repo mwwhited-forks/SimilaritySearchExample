@@ -1,17 +1,17 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
 
-namespace ResourceProjectDatabase;
+namespace SimilaritySearchExample.Persistence;
 
-public class ExampleDbContextDesignFactory : IDesignTimeDbContextFactory<ResourceProfilerContext>
+public class ResourceProfilerContextDesignFactory : IDesignTimeDbContextFactory<ResourceProfilerContext>
 {
     public ResourceProfilerContext CreateDbContext(string[] args)
     {
-        var connectionString = "Host=127.0.0.1;Database=my_db;Username=admin;Password=admin";
+        var connectionString = "Server=127.0.0.1;Database=ResourceProfilerDb;User ID=sa;Password=S1m1l41tyS34rch;TrustServerCertificate=True;";
         Console.WriteLine($"Connection String: \"{connectionString}\"");
 
         var optionsBuilder = new DbContextOptionsBuilder<ResourceProfilerContext>();
-        optionsBuilder.UseNpgsql(connectionString, o => o.UseVector());
+        optionsBuilder.UseSqlServer(connectionString);
 
         return new ResourceProfilerContext(optionsBuilder.Options);
     }

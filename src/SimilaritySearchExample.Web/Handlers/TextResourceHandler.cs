@@ -2,9 +2,9 @@
 using Eliassen.Documents;
 using Eliassen.MessageQueueing;
 using Eliassen.MessageQueueing.Services;
-using ResourceProfiler.Web.Models;
+using SimilaritySearchExample.Web.Models;
 
-namespace ResourceProfiler.Web.Handlers;
+namespace SimilaritySearchExample.Web.Handlers;
 
 public class TextResourceHandler : IMessageQueueHandler<TextResources>
 {
@@ -67,7 +67,7 @@ If you add formatting do it in markdown";
         {
             Model = "phi",
             Prompt = prompt,
-            System = systemPrompt,             
+            System = systemPrompt,
         });
 
         var ms = new MemoryStream();
