@@ -5,7 +5,7 @@ services:
         - 1433:1433
         environment:
         - ACCEPT_EULA=Y
-        - MSSQL_SA_PASSWORD=El1@ssen
+        - MSSQL_SA_PASSWORD=S1m1l@1tyS3@rch
         image: mcr.microsoft.com/mssql/server:2022-latest
         volumes:
         - sqlserver-data:/var/opt/mssql

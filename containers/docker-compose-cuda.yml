@@ -13,13 +13,6 @@ services:
     networks:
       - backend
 
-  rabbitmq:
-    extends:
-      file: docker-compose.rabbitmq.yml
-      service: rabbitmq
-    networks:
-      - backend
-
   smtp4dev:
     extends:
       file: docker-compose.smtp4dev.yml

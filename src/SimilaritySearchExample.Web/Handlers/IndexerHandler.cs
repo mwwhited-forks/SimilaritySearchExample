@@ -68,16 +68,20 @@ public class IndexerHandler : IMessageQueueHandler<Indexer>
         //TODO: do this better
 
         var chunkLength = _embeddingProvider.Length;
-        var chunks = new List<ReadOnlyMemory<float>>();
+        var chunks = new List<(ReadOnlyMemory<float>, Dictionary<string, object>)>();
+        var segment = 0;
         for (var x = 0; x < text.Length; x += chunkLength)
         {
             var chunk = memory[x..(x + Math.Min(chunkLength, text.Length - x))];
+            var value = chunk.ToString();
 
-            if (MemoryMarshal.TryGetString(chunk, out var value, out var st, out var len))
+            var embedding = await _embeddingProvider.GetEmbeddingAsync(value);
+            chunks.Add((embedding, new()
             {
-                var embedding = await _embeddingProvider.GetEmbeddingAsync(value);
-                chunks.Add(embedding);
-            }
+                ["Segment"] = segment++,
+                ["Length"] = chunk.Length,
+                ["Start"] = x,
+            }));
         }
 
         if (chunks.Count > 0)
@@ -95,10 +99,10 @@ public class IndexerHandler : IMessageQueueHandler<Indexer>
                 FileName = message.FileName,
                 ContentType = message.ContentType,
                 MetaData = new()
-            {
-                { "Hash",hash },
-                { "EmbeddingIds",string.Join(";",results) },
-            },
+                {
+                    { "Hash",hash },
+                    { "EmbeddingIds",string.Join(";",results) },
+                },
             };
 
             var result = message.Source switch
