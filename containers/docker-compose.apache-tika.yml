@@ -1,0 +1,6 @@
+name: apache-tika
+services:
+    apache-tika:
+        ports:
+            - 9998:9998
+        image: apache/tika

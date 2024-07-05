@@ -1,0 +1,57 @@
+﻿<Project Sdk="MSBuild.Sdk.SqlProj/2.7.2">
+  <!--https://github.com/rr-wfm/MSBuild.Sdk.SqlProj/-->
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <SqlServerVersion>SqlAzure</SqlServerVersion>
+    <EmbedAllSources>false</EmbedAllSources>
+    <EmbedUntrackedSources>false</EmbedUntrackedSources>
+    <IncludeSymbols>false</IncludeSymbols>
+
+    <GenerateCreateScript>True</GenerateCreateScript>
+    
+    <DeployScriptFileName>SimilaritySearchExampleDB.sql</DeployScriptFileName>
+    <!--<CreateNewDatabase>False</CreateNewDatabase>-->
+    <IncludeCompositeObjects>True</IncludeCompositeObjects>
+    <GenerateSmartDefaults>True</GenerateSmartDefaults>
+    <BlockOnPossibleDataLoss>True</BlockOnPossibleDataLoss>
+    <DropObjectsNotInSource>False</DropObjectsNotInSource>
+    <DoNotDropDatabaseScopedCredentials>False</DoNotDropDatabaseScopedCredentials>
+    <DoNotDropLogins>False</DoNotDropLogins>
+    <DropStatisticsNotInSource>False</DropStatisticsNotInSource>
+    <ScriptDatabaseOptions>True</ScriptDatabaseOptions>
+    <ProfileVersionNumber>1</ProfileVersionNumber>
+    <DatabaseEdition>Basic</DatabaseEdition>
+    <DatabaseServiceObjective>Basic</DatabaseServiceObjective>
+    <DatabaseMaximumSize>2</DatabaseMaximumSize>
+    <DropIndexesNotInSource>False</DropIndexesNotInSource>
+    <DropExtendedPropertiesNotInSource>True</DropExtendedPropertiesNotInSource>
+    <IgnoreColumnOrder>True</IgnoreColumnOrder>
+    <IgnoreComments>True</IgnoreComments>
+    <IgnoreIdentitySeed>True</IgnoreIdentitySeed>
+    <IgnoreIncrement>True</IgnoreIncrement>
+    <BackupDatabaseBeforeChanges>True</BackupDatabaseBeforeChanges>
+    
+    <DeployOnPublish>false</DeployOnPublish>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PostDeploy Include="Post-Deployment\Script.PostDeployment.sql" />
+    <PreDeploy Include="Pre-Deployment\Script.PreDeployment.sql" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Generated\" />
+  </ItemGroup>
+
+  <!--
+  sqlpackage
+    /Action:Publish \
+    /SourceFile:MyDatabase.dacpac \
+    /TargetServerName:localhost \
+    /TargetDatabaseName:MyDatabase \
+    /TargetUser:sa \
+    /TargetPassword: MyP@ssword \
+    /Properties:IncludeCompositeObjects=True
+  -->
+
+</Project>

@@ -1,0 +1,11 @@
+name: sql-server
+services:
+    sql-server:
+        ports:
+        - 1433:1433
+        environment:
+        - ACCEPT_EULA=Y
+        - MSSQL_SA_PASSWORD=El1@ssen
+        image: mcr.microsoft.com/mssql/server:2022-latest
+        volumes:
+        - sqlserver-data:/var/opt/mssql

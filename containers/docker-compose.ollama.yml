@@ -1,0 +1,9 @@
+name: ollama
+services:
+
+    ollama:
+        build:
+            dockerfile: DockerFile.ollama
+            context: .
+        ports:
+            - 11434:11434

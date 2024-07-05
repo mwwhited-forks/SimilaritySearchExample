@@ -1,0 +1,45 @@
+<Project>
+
+	<!-- 
+	when `dotnet clean` is not clean enough... 
+	`dotnet clean /T:DeepClean` ensures all of the build and intermediate files are removed 
+	-->
+	<Target Name="DeepClean">
+		<Message Text="===== Really cleaning project: $(Configuration) - &quot;$(MSBuildProjectName)&quot;"  Importance="high"/>
+    <Message Text="===== SolutionDir: $(SolutionDir)"  Importance="high"/>    
+		<RemoveDir Directories="$(BaseIntermediateOutputPath)" Condition="Exists('$(BaseIntermediateOutputPath)')" ContinueOnError="true" />
+		<RemoveDir Directories="$(BaseOutputPath)" Condition="Exists('$(BaseOutputPath)')" ContinueOnError="true" />
+    <RemoveDir Directories="$(TestResultsOutFolderPath)" Condition="Exists('$(TestResultsOutFolderPath)')" ContinueOnError="true" />
+	</Target>
+  <Target Name="CleanPaths">
+    <Message Text="===== Check: $(SolutionDir)"  Importance="high"/>
+    <ItemGroup>
+      <Directories Include="$([System.IO.Directory]::GetDirectories('$(SolutionDir)', '*', System.IO.SearchOption.AllDirectories))" />
+      <Directories>
+        <Files>$([System.IO.Directory]::GetFiles("%(Directories.Identity)", "*", System.IO.SearchOption.AllDirectories).get_Length())</Files>
+      </Directories>
+    </ItemGroup>
+    <RemoveDir Directories="@(Directories)" Condition="%(Files)=='0'" />
+  </Target>
+
+	<Target Name="GetDocumentation" Condition="'@(CodeDocumentation)' != ''">
+		<!--AfterTargets="PostBuildEvent"-->
+		<Message Text="===== Get Documentation: $(Configuration) - &quot;$(MSBuildProjectName)&quot;"  Importance="high"/>
+		<RemoveDir Directories="$(CodeDocumentPath)$(MSBuildProjectName)" ContinueOnError="true" />
+		<Message Text="CodeDocumentation: @(CodeDocumentation) -> $(CodeDocumentPath)$(MSBuildProjectName)"  Importance="high"/>
+		<Copy SourceFiles="@(CodeDocumentation)" DestinationFolder="$(CodeDocumentPath)$(MSBuildProjectName)" />
+	</Target>
+
+	<!-- Ensure the PackageReadmeFile is included with the projects to be packaged for nuget -->
+	<Target Name="CheckReadMe" Condition="'$(IsPackable)'=='true' and '$(PackageReadmeFile)'==''" BeforeTargets="Build">
+		<Warning Text="No PackageReadmeFile included for &quot;$(MSBuildProjectName)&quot;"
+				 Code="ELIPK001" 
+				 File="$(MSBuildProjectName).csproj" />
+	</Target>
+	<Target Name="CheckReadMeExists" Condition="'$(PackageReadmeFile)'!='' and !Exists('$(PackageReadmeFile)')" BeforeTargets="Build">
+		<Error Text="&quot;$(PackageReadmeFile)&quot; missing from &quot;$(MSBuildProjectName)&quot;"
+			   Code="ELIPK002"
+			   File="$(MSBuildProjectName).csproj" />
+	</Target>
+
+</Project>

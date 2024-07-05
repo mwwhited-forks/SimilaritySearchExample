@@ -1,0 +1,19 @@
+name: azurite
+services:
+    azurite:
+        ports:
+            - 10000:10000
+            - 10001:10001
+            - 10002:10002
+        image: mcr.microsoft.com/azure-storage/azurite
+        volumes:
+            - azurite-data:/data
+        command: >
+          azurite 
+          --blobPort 10000 --blobHost 0.0.0.0 
+          --queuePort 10001 --queueHost 0.0.0.0 
+          --tablePort 10002 --tableHost 0.0.0.0 
+          --location /data
+          --loose
+          --skipApiVersionCheck 
+          --disableProductStyleUrl

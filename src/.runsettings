@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RunSettings>
+    <!--https://learn.microsoft.com/en-us/visualstudio/test/configure-unit-tests-by-using-a-dot-runsettings-file?view=vs-2022-->
+    <RunConfiguration>
+        <MaxCpuCount>10</MaxCpuCount>
+        <ResultsDirectory>.\TestResults\</ResultsDirectory>
+        <!--<TestCaseFilter>(TestCategory=Unit) | (TestCategory=Simulate)</TestCaseFilter>-->
+    </RunConfiguration>
+
+    <!--Configurations for data collectors-->
+    <DataCollectionRunSettings>
+        <DataCollectors>
+
+            <DataCollector friendlyName="XPlat code coverage">
+                <Configuration>
+                    <!--Obsolete,GeneratedCodeAttribute,-->
+                    <!--https://github.com/coverlet-coverage/coverlet/blob/master/src/coverlet.collector/DataCollection/CoverletSettings.cs-->
+                    <ExcludeByAttribute>ExcludeFromCodeCoverageAttribute</ExcludeByAttribute>
+
+                    <Exclude>[coverlet.*.tests?]*,[*]Coverlet.Core*,[*.Abstractions?]*</Exclude>
+
+                    <Format>cobertura,opencover</Format>
+
+                    <SingleHit>false</SingleHit>
+                    <UseSourceLink>false</UseSourceLink>
+                    <IncludeTestAssembly>false</IncludeTestAssembly>
+                    <SkipAutoProps>true</SkipAutoProps>
+
+                    <ExcludeAssembliesWithoutSources>true</ExcludeAssembliesWithoutSources>
+
+                </Configuration>
+            </DataCollector>
+        </DataCollectors>
+    </DataCollectionRunSettings>
+
+    <InProcDataCollectionRunSettings>
+        <InProcDataCollectors>
+            <InProcDataCollector assemblyQualifiedName="Coverlet.Collector.DataCollection.CoverletInProcDataCollector, coverlet.collector"
+						   friendlyName="XPlat Code Coverage"
+						   enabled="True"
+						   codebase="coverlet.collector.dll" />
+        </InProcDataCollectors>
+    </InProcDataCollectionRunSettings>
+
+    <LoggerRunSettings>
+        <Loggers>
+            <Logger friendlyName="console" enabled="True">
+                <Configuration>
+                    <Verbosity>normal</Verbosity>
+                </Configuration>
+            </Logger>
+            <Logger friendlyName="trx" enabled="True">
+                <Configuration>
+                    <!-- vvv comment the following line for time stamped results vvv -->
+                    <!--<LogFileName>LatestTestResults.trx</LogFileName>-->
+                    <!-- ^^^ comment the above line for time stamped results ^^^ -->
+                </Configuration>
+            </Logger>
+        </Loggers>
+    </LoggerRunSettings>
+
+    <!-- MSTest adapter -->
+    <MSTest>
+        <MapInconclusiveToFailed>false</MapInconclusiveToFailed>
+        <CaptureTraceOutput>true</CaptureTraceOutput>
+        <DeleteDeploymentDirectoryAfterTestRunIsComplete>false</DeleteDeploymentDirectoryAfterTestRunIsComplete>
+        <DeploymentEnabled>true</DeploymentEnabled>
+        <DeployTestSourceDependencies>true</DeployTestSourceDependencies>
+    </MSTest>
+
+</RunSettings>

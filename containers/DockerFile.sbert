@@ -1,0 +1,23 @@
+FROM python:3.10-slim
+
+# https://github.com/korolkiewiczk/sentence_transformer_docker
+
+WORKDIR /app
+
+ENV SBERT_MODEL=sentence-transformers/all-mpnet-base-v2
+
+RUN pip install transformers
+RUN pip3 install torch --index-url https://download.pytorch.org/whl/cpu 
+# RUN pip3 install torch --index-url https://download.pytorch.org/whl/cu121
+RUN pip install sentence-transformers
+RUN pip install Flask
+
+RUN pip install waitress
+
+RUN python -c "from sentence_transformers import SentenceTransformer; model = SentenceTransformer('$SBERT_MODEL')"
+
+COPY ./sbert/sbert-main.py /app/
+
+EXPOSE 5000
+
+CMD python /app/sbert-main.py "$SBERT_MODEL"

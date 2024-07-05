@@ -1,0 +1,10 @@
+name: qdrant
+services:
+    qdrant:
+        ports:
+        - 6333:6333
+        - 6334:6334
+        image: qdrant/qdrant
+        volumes:
+        - qdrant-storage:/qdrant/storage
+        - qdrant-snapshots:/qdrant/snapshots

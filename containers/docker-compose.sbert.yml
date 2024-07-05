@@ -1,0 +1,9 @@
+name: sbert
+services:
+
+  sbert:
+    build:
+      dockerfile: DockerFile.sbert
+      context: .
+    ports: 
+      - 5080:5000
