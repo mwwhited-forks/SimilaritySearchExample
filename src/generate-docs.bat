@@ -2,17 +2,19 @@
 @ECHO OFF
 SETLOCAL EnableDelayedExpansion
 
+SET SCRIPT_ROOT=%~dp0
+PUSHD "%SCRIPT_ROOT%"
+
 SET SolutionDir=%~dp0
 ECHO SolutionDir %SolutionDir%
 SET PublishPath=%SolutionDir%publish\libs\
 ECHO PublishPath %PublishPath%
 
-SET TARGET_SOLUTION=Eliassen.Libs.sln
-SET TARGET_SOLUTION_NAME=Eliassen.Libs
-SET TARGET_WEB_PROJECT=.\Examples\Eliassen.WebApi\Eliassen.WebApi.csproj
+SET TARGET_SOLUTION=GreenOnion.API.sln
+SET TARGET_SOLUTION_NAME=GreenOnion.API
+SET TARGET_WEB_PROJECT=.\GreenOnion.API\GreenOnion.API.csproj
 
-SET TEMPLATE_COMMAND=run --project Tools\Eliassen.TemplateEngine.Cli
-REM SET TEMPLATE_COMMAND=templateengine
+SET TEMPLATE_COMMAND=templateengine
 
 IF /I "%1"=="docs" (
     CALL :GENERATE_CODE_DOCS
@@ -32,38 +34,40 @@ FOR /F "tokens=* USEBACKQ" %%g IN (`dotnet gitversion /output json /showvariable
 if "%BUILD_VERSION%"=="" GOTO error
 ECHO Building Version=  "%BUILD_VERSION%"
 
-CALL :FORMAT_SOURCE_CODE
-
-CALL build.bat
-SET TEST_ERR=%ERRORLEVEL%
-IF NOT "%TEST_ERR%"=="0" (
-	ECHO "Build Failed! %TEST_ERR%"
-	GOTO :skiptoend
-)
+@REM CALL :FORMAT_SOURCE_CODE
+@REM 
+@REM CALL build.bat
+@REM SET TEST_ERR=%ERRORLEVEL%
+@REM IF NOT "%TEST_ERR%"=="0" (
+@REM 	ECHO "Build Failed! %TEST_ERR%"
+@REM 	GOTO :skiptoend
+@REM )
 
 CALL :BUILD_SWAGGER_DOCS
-CALL :GENERATE_ENDPOINTS_REPORT
-CALL :GENERATE_CODE_DOCS
-CALL :GENERATE_LIBRARY_DOCS
+@REM CALL :GENERATE_ENDPOINTS_REPORT
+@REM CALL :GENERATE_CODE_DOCS
+@REM CALL :GENERATE_LIBRARY_DOCS
 
-CALL test.bat --no-start
-SET TEST_ERR=%ERRORLEVEL%
-IF NOT "%TEST_ERR%"=="0" (
-	ECHO "Tests Failed! %TEST_ERR%"
-	GOTO :skiptoend
-)
+@REM CALL test.bat --no-start
+@REM SET TEST_ERR=%ERRORLEVEL%
+@REM IF NOT "%TEST_ERR%"=="0" (
+@REM 	ECHO "Tests Failed! %TEST_ERR%"
+@REM 	GOTO :skiptoend
+@REM )
 
-CALL :GENERATE_TEST_REPORTS
-CALL :GENERATE_SOFTWARE_BOM
-CALL :GENERATE_SOFTWARE_BOM_REPORT
+@REM CALL :GENERATE_TEST_REPORTS
+@REM CALL :GENERATE_SOFTWARE_BOM
+@REM CALL :GENERATE_SOFTWARE_BOM_REPORT
 
 ECHO TEST_ERR=%TEST_ERR%
 :skiptoend
 IF "%TEST_ERR%"=="0" (
 	ECHO "No Errors :)"
 )
+POPD
 EXIT /B %TEST_ERR%
 :EOF
+POPD
 ENDLOCAL
 EXIT /B
 

@@ -5,17 +5,13 @@
     <RunConfiguration>
         <MaxCpuCount>10</MaxCpuCount>
         <ResultsDirectory>.\TestResults\</ResultsDirectory>
-        <!--<TestCaseFilter>(TestCategory=Unit) | (TestCategory=Simulate)</TestCaseFilter>-->
     </RunConfiguration>
 
-    <!--Configurations for data collectors-->
     <DataCollectionRunSettings>
         <DataCollectors>
 
             <DataCollector friendlyName="XPlat code coverage">
                 <Configuration>
-                    <!--Obsolete,GeneratedCodeAttribute,-->
-                    <!--https://github.com/coverlet-coverage/coverlet/blob/master/src/coverlet.collector/DataCollection/CoverletSettings.cs-->
                     <ExcludeByAttribute>ExcludeFromCodeCoverageAttribute</ExcludeByAttribute>
 
                     <Exclude>[coverlet.*.tests?]*,[*]Coverlet.Core*,[*.Abstractions?]*</Exclude>
@@ -51,16 +47,9 @@
                 </Configuration>
             </Logger>
             <Logger friendlyName="trx" enabled="True">
-                <Configuration>
-                    <!-- vvv comment the following line for time stamped results vvv -->
-                    <!--<LogFileName>LatestTestResults.trx</LogFileName>-->
-                    <!-- ^^^ comment the above line for time stamped results ^^^ -->
-                </Configuration>
             </Logger>
         </Loggers>
     </LoggerRunSettings>
-
-    <!-- MSTest adapter -->
     <MSTest>
         <MapInconclusiveToFailed>false</MapInconclusiveToFailed>
         <CaptureTraceOutput>true</CaptureTraceOutput>

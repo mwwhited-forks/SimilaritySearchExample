@@ -1,0 +1,6 @@
+FROM mcr.microsoft.com/dotnet/aspnet:8.0
+EXPOSE 80
+# EXPOSE 443
+WORKDIR /app
+ADD ./Publish/WebApi /app
+ENTRYPOINT ["dotnet", "GreenOnion.API.dll"]

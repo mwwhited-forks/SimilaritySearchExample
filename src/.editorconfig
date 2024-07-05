@@ -131,15 +131,15 @@ spelling_languages = en-us
 vsspell_ignored_words_global=Linq|Mvc|Api|Nullable|Queryable|Bson|deserialize|Serializer|Jwt|Middleware|Json
 vsspell_ignored_words_framework=Searchable|Accessor|queueing|Auth|Templating|mongo|xslt|yaml|Username
 vsspell_ignored_words_application=Dto|Blog|Vlog|Blogs|Admin|Dataloader|Cli|Bcc|Cc|Sms|Imap|Sha|Keycloak
-vsspell_ignored_words_eliassen=Eliassen|Nucleus
 vsspell_ignored_words_extensions=qdrant|Qdrant|Sbert|SBert|sbert|ollama|Ollama|Markdig|Grpc|llm
-vsspell_ignored_words_apps=Pdf|uuid|Uuid|metadata|Tika|Docx|Odt|Epub|Rtf|Utc|Mailkit
+vsspell_ignored_words_apps=Pdf|uuid|Uuid|metadata|Tika|Docx|Odt|Epub|Rtf|Utc|Mailkit|gtin
 
 dotnet_diagnostic.CA1822.severity = none # Mark members as static
 dotnet_diagnostic.IDE0042.severity = none # Deconstruct variable declaration
 dotnet_diagnostic.IDE0052.severity = none # Remove unread private member
 dotnet_diagnostic.IDE0059.severity = none # Remove unnecessary value assignment
 dotnet_diagnostic.IDE0060.severity = none # Remove unused parameter
+dotnet_diagnostic.IDE0037.severity = none # Member name can be simplified
 dotnet_diagnostic.CA1861.severity = none # Avoid constant arrays as arguments
 csharp_style_prefer_primary_constructors = false # true:suggestion
 csharp_space_around_binary_operators = before_and_after

@@ -3,7 +3,7 @@ REM @REM SET
 @ECHO OFF
 SETLOCAL
 
-SET TestProject=Eliassen.Libs.sln
+SET TestProject=GreenOnion.API.sln
 REM SET Configuration=Debug
 SET Configuration=Release
 

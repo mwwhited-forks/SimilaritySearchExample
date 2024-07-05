@@ -1,0 +1,36 @@
+{
+  "profiles": {
+    "WSL": {
+      "commandName": "WSL2",
+      "distributionName": ""
+    },
+    "Dataloader (Export)": {
+      "commandName": "Project",
+      "commandLineArgs": "\"--connection-string=Server=127.0.0.1;Database=GreenOnionDb;User ID=sa;Password=Gr33n0n!on;TrustServerCertificate=True;\"\r\n\"--path=$(SolutionDir)..\\data\\testing\"\r\n--action=Export"
+    },
+    "Dataloader (Execute)": {
+      "commandName": "Project",
+      "commandLineArgs": "\"--connection-string=Server=127.0.0.1;Database=GreenOnionDb;User ID=sa;Password=Gr33n0n!on;TrustServerCertificate=True;\"\r\n\"--path=$(SolutionDir)..\\data\\cleanup\"\r\n--action=Execute"
+    },
+    "Dataloader (Execute - Dev)": {
+      "commandName": "Project",
+      "commandLineArgs": "\"--connection-string=Server=127.0.0.1;Database=green-onion-db-dev;User ID=sa;Password=Gr33n0n!on;TrustServerCertificate=True;\"\r\n\"--path=$(SolutionDir)..\\data\\cleanup\"\r\n--action=Execute"
+    },
+    "Dataloader (Import - testing data)": {
+      "commandName": "Project",
+      "commandLineArgs": "\"--connection-string=Server=127.0.0.1;Database=GreenOnionDb;User ID=sa;Password=Gr33n0n!on;TrustServerCertificate=True;\"\r\n\"--path=$(SolutionDir)..\\data\\testing\"\r\n--action=Import"
+    },
+    "Dataloader (Import - master data)": {
+      "commandName": "Project",
+      "commandLineArgs": "\"--connection-string=Server=127.0.0.1;Database=GreenOnionDb;User ID=sa;Password=Gr33n0n!on;TrustServerCertificate=True;\"\r\n\"--path=$(SolutionDir)..\\data\\master-data\"\r\n--action=Import"
+    },
+    "Dataloader (Export - dev)": {
+      "commandName": "Project",
+      "commandLineArgs": "\"--connection-string=Server=127.0.0.1;Database=green-onion-db-dev;User ID=sa;Password=Gr33n0n!on;TrustServerCertificate=True;\"\r\n\"--path=$(SolutionDir)..\\data\\testing\"\r\n--action=Export"
+    },
+    "Dataloader (Import - testing data - dev)": {
+      "commandName": "Project",
+      "commandLineArgs": "\"--connection-string=Server=127.0.0.1;Database=green-onion-db-dev;User ID=sa;Password=Gr33n0n!on;TrustServerCertificate=True;\"\r\n\"--path=$(SolutionDir)..\\data\\testing\"\r\n--action=Import"
+    }
+  }
+}

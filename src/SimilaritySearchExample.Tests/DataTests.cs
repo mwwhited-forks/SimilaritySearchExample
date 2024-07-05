@@ -89,8 +89,7 @@ public class DataTests
             ;
 
         var service = new ServiceCollection()
-            .AddDbContext<ResourceProfilerContext>(opt => opt.UseNpgsql(connectionString))
-            //.AddDbContext<ResourceProfilerContext>(opt => opt.UseSqlServer(connectionString))
+            .AddDbContext<ResourceProfilerContext>(opt => opt.UseSqlServer(connectionString))
             .BuildServiceProvider()
             ;
 

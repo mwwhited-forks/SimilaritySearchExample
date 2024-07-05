@@ -13,31 +13,31 @@
 	</Target>
 
 	<ItemGroup>
-    <None Include="$(SolutionDir)containers\**\*.*">
+    <None Include="$(SolutionDir)..\containers\**\*.*">
       <Link>\containers\%(RecursiveDir)%(FileName)%(Extension)</Link>
     </None>
-		<None Include="$(SolutionDir)docs\**\*.*">
+		<None Include="$(SolutionDir)..\docs\**\*.*">
 			<Link>\docs\%(RecursiveDir)%(FileName)%(Extension)</Link>
 		</None>
-		<None Include="$(SolutionDir)Scripts\**\*.*">
+		<None Include="$(SolutionDir)..\Scripts\**\*.*">
 			<Link>\Scripts\%(RecursiveDir)%(FileName)%(Extension)</Link>
 		</None>
-		<None Include="$(SolutionDir).config\**\*.*">
+		<None Include="$(SolutionDir)..\.config\**\*.*">
 			<Link>\.config\%(RecursiveDir)%(FileName)%(Extension)</Link>
 		</None>
-		<None Include="$(SolutionDir).github\**\*.*">
+		<None Include="$(SolutionDir)..\.github\**\*.*">
 			<Link>\.github\%(RecursiveDir)%(FileName)%(Extension)</Link>
 		</None>
 		<None Include="$(SolutionDir)*.*">
-			<Link>\%(FileName)%(Extension)</Link>
+			<Link>\src\%(FileName)%(Extension)</Link>
 		</None>
 		<None Remove="$(SolutionDir)*.sln" />
 
 		<None Include="$(SolutionDir)TestResults\**\*.*">
-			<Link>\TestResults\%(RecursiveDir)%(FileName)%(Extension)</Link>
+			<Link>\src\TestResults\%(RecursiveDir)%(FileName)%(Extension)</Link>
 		</None>
 		<None Include="$(SolutionDir)publish\**\*.*">
-			<Link>\publish\%(RecursiveDir)%(FileName)%(Extension)</Link>
+			<Link>\src\publish\%(RecursiveDir)%(FileName)%(Extension)</Link>
 		</None>
 	</ItemGroup>
 
