@@ -7,12 +7,7 @@ SET SCRIPT_ROOT=%~dp0
 PUSHD "%SCRIPT_ROOT%"
 
 REM Start -- Configuration this section Only
-
-SET PROJECT_ASSEMBLY=SimilaritySearchExample.Web
-SET PROJECT_SOLUTION=SimilaritySearchExample.sln
-SET DATALOADER_ASSEMBLY=Tools\GreenOnion.Dataloader
-SET DATA_PROJECT=SimilaritySearchExample.DB
-
+CALL config.bat
 REM End -- Configuration this section Only 
 
 @REM dotnet format

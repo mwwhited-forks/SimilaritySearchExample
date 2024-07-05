@@ -5,7 +5,6 @@ services:
         - 7080:80
         # - 7443:443
         environment:
-        - GOSqlConnection__ConnectionString=Server=green-onion-dev-sql-server-1;Database=GreenOnionDb;User ID=sa;Password=Gr33n0n!on;TrustServerCertificate=True;
         - ASPNETCORE_ENVIRONMENT=Development
         - HTTP_PORTS=80
         # - HTTPS_PORTS=443

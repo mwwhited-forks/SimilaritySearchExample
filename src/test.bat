@@ -3,7 +3,10 @@ REM @REM SET
 @ECHO OFF
 SETLOCAL
 
-SET TestProject=GreenOnion.API.sln
+REM Start -- Configuration this section Only
+CALL config.bat
+REM End -- Configuration this section Only 
+
 REM SET Configuration=Debug
 SET Configuration=Release
 
@@ -46,7 +49,7 @@ RMDIR /S/Q ".\TestResults" 2>NUL
 MKDIR ".\TestResults\Coverage\Reports" 2>NUL
 
 ECHO "Run Unit Tests as %Configuration%"
-dotnet test "%TestProject%" ^
+dotnet test "%PROJECT_SOLUTION%" ^
 --configuration %Configuration% ^
 --nologo ^
 --filter "%TestFilter%"

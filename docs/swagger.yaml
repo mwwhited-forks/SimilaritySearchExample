@@ -1,0 +1,967 @@
+openapi: 3.0.1
+info:
+  title: SimilaritySearchExample.Web
+  version: 0.1.0.0
+paths:
+  /Document/List:
+    get:
+      tags:
+        - Document
+      parameters:
+        - name: currentPage
+          in: query
+          schema:
+            type: integer
+            format: int32
+        - name: pageSize
+          in: query
+          description: '**Default size:** `10`, `-1` will disable paging'
+          schema:
+            type: integer
+            description: '**Default size:** `10`, `-1` will disable paging'
+            format: int32
+        - name: excludePageCount
+          in: query
+          description: '`true` will disable row/page counts and may decrease processing time without effecting paging functions'
+          schema:
+            type: boolean
+            description: '`true` will disable row/page counts and may decrease processing time without effecting paging functions'
+        - name: searchTerm
+          in: query
+          description: '**Searched Properties:** ContentType; FileName; MetaData'
+          schema:
+            type: string
+            description: '**Searched Properties:** ContentType; FileName; MetaData'
+            nullable: true
+        - name: orderBy.ContentType
+          in: query
+          schema:
+            $ref: '#/components/schemas/Eliassen.System.Linq.Search.OrderDirections'
+        - name: orderBy.FileName
+          in: query
+          schema:
+            $ref: '#/components/schemas/Eliassen.System.Linq.Search.OrderDirections'
+        - name: orderBy.MetaData
+          in: query
+          schema:
+            $ref: '#/components/schemas/Eliassen.System.Linq.Search.OrderDirections'
+      responses:
+        '200':
+          description: OK
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/Eliassen.System.ResponseModel.PagedQueryResult-Eliassen.Documents.Models.ContentMetaDataReference'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Eliassen.System.ResponseModel.PagedQueryResult-Eliassen.Documents.Models.ContentMetaDataReference'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/Eliassen.System.ResponseModel.PagedQueryResult-Eliassen.Documents.Models.ContentMetaDataReference'
+        '404':
+          description: Not Found
+      x-permissions:
+        anonymous: true
+    post:
+      tags:
+        - Document
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Eliassen.System.Linq.Search.SearchQuery-Eliassen.Documents.Models.ContentMetaDataReference'
+          text/json:
+            schema:
+              $ref: '#/components/schemas/Eliassen.System.Linq.Search.SearchQuery-Eliassen.Documents.Models.ContentMetaDataReference'
+      responses:
+        '200':
+          description: OK
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/Eliassen.System.ResponseModel.PagedQueryResult-Eliassen.Documents.Models.ContentMetaDataReference'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Eliassen.System.ResponseModel.PagedQueryResult-Eliassen.Documents.Models.ContentMetaDataReference'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/Eliassen.System.ResponseModel.PagedQueryResult-Eliassen.Documents.Models.ContentMetaDataReference'
+        '404':
+          description: Not Found
+      x-permissions:
+        anonymous: true
+  /Document/Download:
+    get:
+      tags:
+        - Document
+      parameters:
+        - name: file
+          in: query
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            text/plain:
+              schema:
+                type: string
+                format: binary
+            application/json:
+              schema:
+                type: string
+                format: binary
+            text/json:
+              schema:
+                type: string
+                format: binary
+        '404':
+          description: Not Found
+      x-permissions:
+        anonymous: true
+  /Document/Delete:
+    delete:
+      tags:
+        - Document
+      parameters:
+        - name: file
+          in: query
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            text/plain:
+              schema:
+                type: string
+                format: binary
+            application/json:
+              schema:
+                type: string
+                format: binary
+            text/json:
+              schema:
+                type: string
+                format: binary
+        '404':
+          description: Not Found
+      x-permissions:
+        anonymous: true
+  /Document/Upload:
+    post:
+      tags:
+        - Document
+      parameters:
+        - name: file
+          in: query
+          schema:
+            type: string
+        - name: sourceContentType
+          in: query
+          schema:
+            type: string
+        - name: overwrite
+          in: query
+          schema:
+            type: boolean
+            default: false
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                content:
+                  type: string
+                  format: binary
+            encoding:
+              content:
+                style: form
+      responses:
+        '200':
+          description: OK
+        '400':
+          description: Bad Request
+        '404':
+          description: Not Found
+      x-permissions:
+        anonymous: true
+  /Document/Store:
+    put:
+      tags:
+        - Document
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              required:
+                - ContentType
+                - FileName
+              type: object
+            encoding:
+              ContentType:
+                style: form
+              FileName:
+                style: form
+              MetaData:
+                style: form
+      responses:
+        '200':
+          description: OK
+        '400':
+          description: Bad Request
+        '404':
+          description: Not Found
+      x-permissions:
+        anonymous: true
+  /Summaries/List:
+    get:
+      tags:
+        - Summaries
+      parameters:
+        - name: currentPage
+          in: query
+          schema:
+            type: integer
+            format: int32
+        - name: pageSize
+          in: query
+          description: '**Default size:** `10`, `-1` will disable paging'
+          schema:
+            type: integer
+            description: '**Default size:** `10`, `-1` will disable paging'
+            format: int32
+        - name: excludePageCount
+          in: query
+          description: '`true` will disable row/page counts and may decrease processing time without effecting paging functions'
+          schema:
+            type: boolean
+            description: '`true` will disable row/page counts and may decrease processing time without effecting paging functions'
+        - name: searchTerm
+          in: query
+          description: '**Searched Properties:** ContentType; FileName; MetaData'
+          schema:
+            type: string
+            description: '**Searched Properties:** ContentType; FileName; MetaData'
+            nullable: true
+        - name: orderBy.ContentType
+          in: query
+          schema:
+            $ref: '#/components/schemas/Eliassen.System.Linq.Search.OrderDirections'
+        - name: orderBy.FileName
+          in: query
+          schema:
+            $ref: '#/components/schemas/Eliassen.System.Linq.Search.OrderDirections'
+        - name: orderBy.MetaData
+          in: query
+          schema:
+            $ref: '#/components/schemas/Eliassen.System.Linq.Search.OrderDirections'
+      responses:
+        '200':
+          description: OK
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/Eliassen.System.ResponseModel.PagedQueryResult-Eliassen.Documents.Models.ContentMetaDataReference'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Eliassen.System.ResponseModel.PagedQueryResult-Eliassen.Documents.Models.ContentMetaDataReference'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/Eliassen.System.ResponseModel.PagedQueryResult-Eliassen.Documents.Models.ContentMetaDataReference'
+        '404':
+          description: Not Found
+      x-permissions:
+        anonymous: true
+    post:
+      tags:
+        - Summaries
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Eliassen.System.Linq.Search.SearchQuery-Eliassen.Documents.Models.ContentMetaDataReference'
+          text/json:
+            schema:
+              $ref: '#/components/schemas/Eliassen.System.Linq.Search.SearchQuery-Eliassen.Documents.Models.ContentMetaDataReference'
+      responses:
+        '200':
+          description: OK
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/Eliassen.System.ResponseModel.PagedQueryResult-Eliassen.Documents.Models.ContentMetaDataReference'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Eliassen.System.ResponseModel.PagedQueryResult-Eliassen.Documents.Models.ContentMetaDataReference'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/Eliassen.System.ResponseModel.PagedQueryResult-Eliassen.Documents.Models.ContentMetaDataReference'
+        '404':
+          description: Not Found
+      x-permissions:
+        anonymous: true
+  /Summaries/Download:
+    get:
+      tags:
+        - Summaries
+      parameters:
+        - name: file
+          in: query
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            text/plain:
+              schema:
+                type: string
+                format: binary
+            application/json:
+              schema:
+                type: string
+                format: binary
+            text/json:
+              schema:
+                type: string
+                format: binary
+        '404':
+          description: Not Found
+      x-permissions:
+        anonymous: true
+  /Summaries/Delete:
+    delete:
+      tags:
+        - Summaries
+      parameters:
+        - name: file
+          in: query
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            text/plain:
+              schema:
+                type: string
+                format: binary
+            application/json:
+              schema:
+                type: string
+                format: binary
+            text/json:
+              schema:
+                type: string
+                format: binary
+        '404':
+          description: Not Found
+      x-permissions:
+        anonymous: true
+  /Summaries/Store:
+    put:
+      tags:
+        - Summaries
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              required:
+                - ContentType
+                - FileName
+              type: object
+            encoding:
+              ContentType:
+                style: form
+              FileName:
+                style: form
+              MetaData:
+                style: form
+      responses:
+        '200':
+          description: OK
+        '400':
+          description: Bad Request
+        '404':
+          description: Not Found
+      x-permissions:
+        anonymous: true
+  /TextDocument/List:
+    get:
+      tags:
+        - TextDocument
+      parameters:
+        - name: currentPage
+          in: query
+          schema:
+            type: integer
+            format: int32
+        - name: pageSize
+          in: query
+          description: '**Default size:** `10`, `-1` will disable paging'
+          schema:
+            type: integer
+            description: '**Default size:** `10`, `-1` will disable paging'
+            format: int32
+        - name: excludePageCount
+          in: query
+          description: '`true` will disable row/page counts and may decrease processing time without effecting paging functions'
+          schema:
+            type: boolean
+            description: '`true` will disable row/page counts and may decrease processing time without effecting paging functions'
+        - name: searchTerm
+          in: query
+          description: '**Searched Properties:** ContentType; FileName; MetaData'
+          schema:
+            type: string
+            description: '**Searched Properties:** ContentType; FileName; MetaData'
+            nullable: true
+        - name: orderBy.ContentType
+          in: query
+          schema:
+            $ref: '#/components/schemas/Eliassen.System.Linq.Search.OrderDirections'
+        - name: orderBy.FileName
+          in: query
+          schema:
+            $ref: '#/components/schemas/Eliassen.System.Linq.Search.OrderDirections'
+        - name: orderBy.MetaData
+          in: query
+          schema:
+            $ref: '#/components/schemas/Eliassen.System.Linq.Search.OrderDirections'
+      responses:
+        '200':
+          description: OK
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/Eliassen.System.ResponseModel.PagedQueryResult-Eliassen.Documents.Models.ContentMetaDataReference'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Eliassen.System.ResponseModel.PagedQueryResult-Eliassen.Documents.Models.ContentMetaDataReference'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/Eliassen.System.ResponseModel.PagedQueryResult-Eliassen.Documents.Models.ContentMetaDataReference'
+        '404':
+          description: Not Found
+      x-permissions:
+        anonymous: true
+    post:
+      tags:
+        - TextDocument
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Eliassen.System.Linq.Search.SearchQuery-Eliassen.Documents.Models.ContentMetaDataReference'
+          text/json:
+            schema:
+              $ref: '#/components/schemas/Eliassen.System.Linq.Search.SearchQuery-Eliassen.Documents.Models.ContentMetaDataReference'
+      responses:
+        '200':
+          description: OK
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/Eliassen.System.ResponseModel.PagedQueryResult-Eliassen.Documents.Models.ContentMetaDataReference'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Eliassen.System.ResponseModel.PagedQueryResult-Eliassen.Documents.Models.ContentMetaDataReference'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/Eliassen.System.ResponseModel.PagedQueryResult-Eliassen.Documents.Models.ContentMetaDataReference'
+        '404':
+          description: Not Found
+      x-permissions:
+        anonymous: true
+  /TextDocument/Download:
+    get:
+      tags:
+        - TextDocument
+      parameters:
+        - name: file
+          in: query
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            text/plain:
+              schema:
+                type: string
+                format: binary
+            application/json:
+              schema:
+                type: string
+                format: binary
+            text/json:
+              schema:
+                type: string
+                format: binary
+        '404':
+          description: Not Found
+      x-permissions:
+        anonymous: true
+  /TextDocument/Delete:
+    delete:
+      tags:
+        - TextDocument
+      parameters:
+        - name: file
+          in: query
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            text/plain:
+              schema:
+                type: string
+                format: binary
+            application/json:
+              schema:
+                type: string
+                format: binary
+            text/json:
+              schema:
+                type: string
+                format: binary
+        '404':
+          description: Not Found
+      x-permissions:
+        anonymous: true
+  /TextDocument/Store:
+    put:
+      tags:
+        - TextDocument
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              required:
+                - ContentType
+                - FileName
+              type: object
+            encoding:
+              ContentType:
+                style: form
+              FileName:
+                style: form
+              MetaData:
+                style: form
+      responses:
+        '200':
+          description: OK
+        '400':
+          description: Bad Request
+        '404':
+          description: Not Found
+      x-permissions:
+        anonymous: true
+  /Vector/List:
+    get:
+      tags:
+        - Vector
+      responses:
+        '200':
+          description: OK
+          content:
+            text/plain:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Eliassen.Search.Models.SearchResultModel'
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Eliassen.Search.Models.SearchResultModel'
+            text/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Eliassen.Search.Models.SearchResultModel'
+        '404':
+          description: Not Found
+      x-permissions:
+        anonymous: true
+    post:
+      tags:
+        - Vector
+      responses:
+        '200':
+          description: OK
+          content:
+            text/plain:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Eliassen.Search.Models.SearchResultModel'
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Eliassen.Search.Models.SearchResultModel'
+            text/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Eliassen.Search.Models.SearchResultModel'
+        '404':
+          description: Not Found
+      x-permissions:
+        anonymous: true
+  /Vector/Query:
+    post:
+      tags:
+        - Vector
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                type: number
+                format: float
+          text/json:
+            schema:
+              type: array
+              items:
+                type: number
+                format: float
+          application/*+json:
+            schema:
+              type: array
+              items:
+                type: number
+                format: float
+      responses:
+        '200':
+          description: OK
+          content:
+            text/plain:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Eliassen.Search.Models.SearchResultModel'
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Eliassen.Search.Models.SearchResultModel'
+            text/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Eliassen.Search.Models.SearchResultModel'
+        '404':
+          description: Not Found
+      x-permissions:
+        anonymous: true
+  /Vector/QueryGrouped:
+    post:
+      tags:
+        - Vector
+      parameters:
+        - name: groupBy
+          in: query
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                type: number
+                format: float
+          text/json:
+            schema:
+              type: array
+              items:
+                type: number
+                format: float
+          application/*+json:
+            schema:
+              type: array
+              items:
+                type: number
+                format: float
+      responses:
+        '200':
+          description: OK
+          content:
+            text/plain:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Eliassen.Search.Models.SearchResultModel'
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Eliassen.Search.Models.SearchResultModel'
+            text/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Eliassen.Search.Models.SearchResultModel'
+        '404':
+          description: Not Found
+      x-permissions:
+        anonymous: true
+  /Vector/Search:
+    get:
+      tags:
+        - Vector
+      parameters:
+        - name: query
+          in: query
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            text/plain:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Eliassen.Search.Models.SearchResultModel'
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Eliassen.Search.Models.SearchResultModel'
+            text/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Eliassen.Search.Models.SearchResultModel'
+        '404':
+          description: Not Found
+      x-permissions:
+        anonymous: true
+  /Vector/SearchGrouped:
+    get:
+      tags:
+        - Vector
+      parameters:
+        - name: query
+          in: query
+          schema:
+            type: string
+        - name: groupBy
+          in: query
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            text/plain:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Eliassen.Search.Models.SearchResultModel'
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Eliassen.Search.Models.SearchResultModel'
+            text/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Eliassen.Search.Models.SearchResultModel'
+        '404':
+          description: Not Found
+      x-permissions:
+        anonymous: true
+  /health:
+    get:
+      tags:
+        - ApiHealth
+      responses:
+        '200':
+          description: 
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                  errors:
+                    type: array
+components:
+  schemas:
+    Eliassen.Documents.Models.ContentMetaDataReference:
+      required:
+        - contentType
+        - fileName
+      type: object
+      properties:
+        contentType:
+          type: string
+          nullable: true
+        fileName:
+          type: string
+          nullable: true
+        metaData:
+          type: object
+          additionalProperties:
+            type: string
+          nullable: true
+      additionalProperties: false
+    Eliassen.Search.Models.SearchResultModel:
+      required:
+        - itemId
+        - score
+      type: object
+      properties:
+        score:
+          type: number
+          format: float
+        itemId:
+          type: string
+          nullable: true
+        metaData:
+          type: object
+          additionalProperties: { }
+          nullable: true
+      additionalProperties: false
+    Eliassen.System.Linq.Search.FilterParameter:
+      type: object
+      properties:
+        eq:
+          nullable: true
+        neq:
+          nullable: true
+        in:
+          type: array
+          items: { }
+          nullable: true
+        gt:
+          nullable: true
+        gte:
+          nullable: true
+        lt:
+          nullable: true
+        lte:
+          nullable: true
+      additionalProperties: false
+    Eliassen.System.Linq.Search.OrderDirections:
+      enum:
+        - asc
+        - desc
+      type: string
+    Eliassen.System.Linq.Search.SearchQuery-Eliassen.Documents.Models.ContentMetaDataReference:
+      type: object
+      properties:
+        currentPage:
+          type: integer
+          format: int32
+        pageSize:
+          type: integer
+          description: '**Default size:** `10`, `-1` will disable paging'
+          format: int32
+        excludePageCount:
+          type: boolean
+          description: '`true` will disable row/page counts and may decrease processing time without effecting paging functions'
+        searchTerm:
+          type: string
+          description: '**Searched Properties:** ContentType; FileName; MetaData'
+          nullable: true
+        filter:
+          properties:
+            contentType:
+              $ref: '#/components/schemas/Eliassen.System.Linq.Search.FilterParameter'
+            fileName:
+              $ref: '#/components/schemas/Eliassen.System.Linq.Search.FilterParameter'
+            metaData:
+              $ref: '#/components/schemas/Eliassen.System.Linq.Search.FilterParameter'
+          description: '**Filterable Properties:** ContentType; FileName; MetaData'
+          nullable: true
+        orderBy:
+          properties:
+            contentType:
+              $ref: '#/components/schemas/Eliassen.System.Linq.Search.OrderDirections'
+            fileName:
+              $ref: '#/components/schemas/Eliassen.System.Linq.Search.OrderDirections'
+            metaData:
+              $ref: '#/components/schemas/Eliassen.System.Linq.Search.OrderDirections'
+          description: '**Sortable Properties:** ContentType, FileName, MetaData  **Default Order:** '
+          nullable: true
+      additionalProperties: false
+    Eliassen.System.ResponseModel.MessageLevels:
+      enum:
+        - trace
+        - debug
+        - info
+        - warning
+        - error
+        - fatal
+        - unknown
+      type: string
+    Eliassen.System.ResponseModel.PagedQueryResult-Eliassen.Documents.Models.ContentMetaDataReference:
+      type: object
+      properties:
+        rows:
+          type: array
+          items:
+            $ref: '#/components/schemas/Eliassen.Documents.Models.ContentMetaDataReference'
+          nullable: true
+          readOnly: true
+        messages:
+          type: array
+          items:
+            $ref: '#/components/schemas/Eliassen.System.ResponseModel.ResultMessage'
+          nullable: true
+        currentPage:
+          type: integer
+          format: int32
+          readOnly: true
+        totalPageCount:
+          type: integer
+          format: int32
+          readOnly: true
+        totalRowCount:
+          type: integer
+          format: int32
+          readOnly: true
+      additionalProperties: false
+    Eliassen.System.ResponseModel.ResultMessage:
+      required:
+        - message
+      type: object
+      properties:
+        level:
+          $ref: '#/components/schemas/Eliassen.System.ResponseModel.MessageLevels'
+        message:
+          type: string
+          nullable: true
+        messageCode:
+          type: string
+          nullable: true
+        context:
+          type: string
+          nullable: true
+        metaData:
+          nullable: true
+      additionalProperties: false
+  securitySchemes:
+    oauth2:
+      type: oauth2
+      description: oauth2 authentication
+      flows:
+        implicit:
+          authorizationUrl: https://lightwellnucleusdev.b2clogin.com/lightwellnucleusdev.onmicrosoft.com/oauth2/v2.0/authorize?p=B2C_1_NucAcc_Signin
+          tokenUrl: https://lightwellnucleusdev.b2clogin.com/lightwellnucleusdev.onmicrosoft.com/oauth2/v2.0/token?p=B2C_1_NucAcc_Signin
+          scopes:
+            https://lightwellnucleusdev.onmicrosoft.com/user.read/read: UserReadApiClaim
+security:
+  - oauth2: [ ]

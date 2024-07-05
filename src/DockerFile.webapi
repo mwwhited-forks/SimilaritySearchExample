@@ -3,4 +3,4 @@ EXPOSE 80
 # EXPOSE 443
 WORKDIR /app
 ADD ./Publish/WebApi /app
-ENTRYPOINT ["dotnet", "GreenOnion.API.dll"]
+ENTRYPOINT ["dotnet", "SimilaritySearchExample.Web.dll"]

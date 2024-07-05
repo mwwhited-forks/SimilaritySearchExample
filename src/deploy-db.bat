@@ -8,14 +8,9 @@ PUSHD "%SCRIPT_ROOT%"
 
 IF /I "%1"=="CLEAN" SET DEPLOY_ACTION=/p:BlockOnPossibleDataLoss=False
 
-SET DATABASE_NAME=ResourceProfilerDb
-SET DATABASE_USER=sa
-SET DATABASE_PASSWORD=S1m1l@1tyS3@rch
-SET COLLECTION_ASSEMBLY=SimilaritySearchExample.DB
-SET PROJECT_ASSEMBLY=SimilaritySearchExample.Persistence
-
-SET DATABASE_CONNECTION=Server=127.0.0.1;Database=%DATABASE_NAME%;User=%DATABASE_USER%;Password=%DATABASE_PASSWORD%;TrustServerCertificate=True;
-SET DATALOADER_COMMAND=dotnet run --configuration Release --project SimilaritySearchExample.Dataloader --
+REM Start -- Configuration this section Only
+CALL config.bat
+REM End -- Configuration this section Only 
 
 @REM CALL generate-db.bat
 

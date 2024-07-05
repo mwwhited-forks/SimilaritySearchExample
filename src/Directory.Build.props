@@ -57,7 +57,7 @@
     <DocumentPath>$(DOCUMENT_PATH.Trim('\'))\</DocumentPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(DOCUMENT_PATH)' == ''">
-    <DocumentPath>$(SolutionDir)docs\</DocumentPath>
+    <DocumentPath>$(SolutionDir)..\docs\</DocumentPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(CodeDocumentPath)' == ''">
     <CodeDocumentPath>$(DocumentPath)code\</CodeDocumentPath>

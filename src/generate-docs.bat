@@ -10,9 +10,9 @@ ECHO SolutionDir %SolutionDir%
 SET PublishPath=%SolutionDir%publish\libs\
 ECHO PublishPath %PublishPath%
 
-SET TARGET_SOLUTION=GreenOnion.API.sln
-SET TARGET_SOLUTION_NAME=GreenOnion.API
-SET TARGET_WEB_PROJECT=.\GreenOnion.API\GreenOnion.API.csproj
+REM Start -- Configuration this section Only
+CALL config.bat
+REM End -- Configuration this section Only 
 
 SET TEMPLATE_COMMAND=templateengine
 
@@ -83,7 +83,7 @@ EXIT /B
 
 :BUILD_SWAGGER_DOCS
 ECHO "Generate - swagger docs"
-dotnet build /T:BuildSwagger %TARGET_WEB_PROJECT%
+dotnet build /T:BuildSwagger %PROJECT_ASSEMBLY%
 EXIT /B
 
 :GENERATE_ENDPOINTS_REPORT
@@ -91,52 +91,52 @@ EXIT /B
 ECHO "Generate Service-Endpoints"
 dotnet %TEMPLATE_COMMAND% ^
 --configuration Release ^
---input .\docs\swagger.json ^
---output .\docs\Service-Endpoints.md ^
+--input ..\docs\swagger.json ^
+--output ..\docs\Service-Endpoints.md ^
 --Template Service-Endpoints ^
---file-template-path .\docs\templates
+--file-template-path ..\docs\templates
 EXIT /B
 
 :GENERATE_CODE_DOCS
 ECHO "Generate - Library code docs"
-RMDIR .\docs\code /S/Q
+RMDIR ..\docs\code /S/Q
 dotnet build /T:GetDocumentation
 EXIT /B
 
 :GENERATE_LIBRARY_DOCS
 ECHO "Generate - Library Docs"
-RMDIR .\docs\Libraries /S/Q
+RMDIR ..\docs\Libraries /S/Q
 dotnet %TEMPLATE_COMMAND% ^
 --configuration Release ^
 --input %PublishPath%*.xml ^
---output .\docs\Libraries\[file].md ^
+--output ..\docs\Libraries\[file].md ^
 --Template Documentation.md ^
---file-template-path .\docs\templates
+--file-template-path ..\docs\templates
 SET TEST_ERR=%ERRORLEVEL%
 IF NOT "%TEST_ERR%"=="0" (
 	ECHO "SBOM Failed! %TEST_ERR%"
     EXIT /B %TEST_ERR%
 )
-DEL .\docs\Libraries\Microsoft*.* /Q
+DEL ..\docs\Libraries\Microsoft*.* /Q
 EXIT /B
 
 :GENERATE_TEST_REPORTS
 ECHO "Generate - Test Docs"
-RMDIR .\docs\Tests /S/Q
-MKDIR .\docs\Tests
+RMDIR ..\docs\Tests /S/Q
+MKDIR ..\docs\Tests
 ECHO "Copy Code Coverage Results"
-COPY .\TestResults\Cobertura.coverage .\docs\Tests\Cobertura.coverage /Y
+COPY .\TestResults\Cobertura.coverage ..\docs\Tests\Cobertura.coverage /Y
 ECHO "Copy Code Test Results"
-COPY .\TestResults\Coverage\Reports\LatestTestResults.trx .\docs\Tests\LatestTestResults.trx /Y
+COPY .\TestResults\Coverage\Reports\LatestTestResults.trx ..\docs\Tests\LatestTestResults.trx /Y
 ECHO "Copy Code Coverage Report"
-COPY .\TestResults\Coverage\Reports\Summary.md .\docs\Tests\Summary.md /Y
+COPY .\TestResults\Coverage\Reports\Summary.md ..\docs\Tests\Summary.md /Y
 ECHO "Generate - Test Result"
 dotnet %TEMPLATE_COMMAND% ^
 --configuration Release ^
 --input .\TestResults\Coverage\Reports\*.trx ^
---output .\docs\Tests\[file].md ^
+--output ..\docs\Tests\[file].md ^
 --Template TestResultsToMarkdown.md ^
---file-template-path .\docs\templates ^
+--file-template-path ..\docs\templates ^
 --input-type XML
 SET TEST_ERR=%ERRORLEVEL%
 IF NOT "%TEST_ERR%"=="0" (
@@ -147,16 +147,16 @@ EXIT /B
 
 :GENERATE_SOFTWARE_BOM
 ECHO "Generate - Software Bill of Materials (bom.xml)"
-RMDIR .\docs\sbom /S/Q
+RMDIR ..\docs\sbom /S/Q
 REM https://github.com/CycloneDX/cyclonedx-dotnet
 dotnet CycloneDX ^
---output .\docs\sbom ^
+--output ..\docs\sbom ^
 --set-version %BUILD_VERSION% ^
---set-name %TARGET_SOLUTION_NAME% ^
+--set-name %PROJECT_SOLUTION_NAME% ^
 --exclude-test-projects ^
 --disable-package-restore ^
 --exclude-dev ^
-%TARGET_SOLUTION%
+%PROJECT_SOLUTION%
 SET TEST_ERR=%ERRORLEVEL%
 IF NOT "%TEST_ERR%"=="0" (
 	ECHO "SBOM Failed! %TEST_ERR%"
@@ -168,10 +168,10 @@ EXIT /B
 ECHO "Generate - Software Bill of Materials (report)"
 dotnet %TEMPLATE_COMMAND% ^
 --configuration Release ^
---input .\docs\sbom\bom.xml ^
---output .\docs\sbom\BillOfMaterials.md ^
+--input ..\docs\sbom\bom.xml ^
+--output ..\docs\sbom\BillOfMaterials.md ^
 --Template SoftwareBillOfMaterials.md ^
---file-template-path .\docs\templates ^
+--file-template-path ..\docs\templates ^
 --input-type XML
 SET TEST_ERR=%ERRORLEVEL%
 IF NOT "%TEST_ERR%"=="0" (
