@@ -19,4 +19,8 @@
     <PackageReference Include="MSTest.TestFramework" Version="3.3.1" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\SimilaritySearchExample.Web\SimilaritySearchExample.Web.csproj" />
+  </ItemGroup>
+
 </Project>

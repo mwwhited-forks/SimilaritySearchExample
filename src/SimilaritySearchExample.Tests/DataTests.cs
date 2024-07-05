@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using ResourceProjectDatabase;
+using SimilaritySearchExample.Persistence;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -25,11 +25,11 @@ public class DataTests
     public async Task ExportData()
     {
         var connectionString =
-            "Host=127.0.0.1;Database=libs_db;Username=admin;Password=admin"
+            "Server=127.0.0.1;Database=ResourceProfilerDb;User ID=sa;Password=S1m1l41tyS34rch;TrustServerCertificate=True;"
             ;
 
         var service = new ServiceCollection()
-            .AddDbContext<ResourceProfilerContext>(opt => opt.UseNpgsql(connectionString))
+            .AddDbContext<ResourceProfilerContext>(opt => opt.UseSqlServer(connectionString))
             //.AddDbContext<ResourceProfilerContext>(opt => opt.UseSqlServer(connectionString))
             .BuildServiceProvider()
             ;
@@ -85,7 +85,7 @@ public class DataTests
     public async Task ImportData()
     {
         var connectionString =
-            "Host=127.0.0.1;Database=libs_db;Username=admin;Password=admin"
+            "Server=127.0.0.1;Database=ResourceProfilerDb;User ID=sa;Password=S1m1l41tyS34rch;TrustServerCertificate=True;"
             ;
 
         var service = new ServiceCollection()

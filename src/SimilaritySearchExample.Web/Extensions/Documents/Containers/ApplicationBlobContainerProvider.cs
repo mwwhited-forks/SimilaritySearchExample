@@ -31,32 +31,36 @@ public class ApplicationBlobContainerProvider : IBlobContainerProvider
 
     public async Task<ContentReference?> GetContentAsync(string path)
     {
-        var doc = await _db.Documents.FirstOrDefaultAsync(d => d.FileName == path && d.ContainerName == ContainerName);
+        //TODO: fix this
+        throw new NotImplementedException();
+        //var doc = await _db.Documents.FirstOrDefaultAsync(d => d.FileName == path && d.ContainerName == ContainerName);
 
-        if (doc == null) return null;
+        //if (doc == null) return null;
 
-        var ms = new MemoryStream();
-        ms.Write(doc.Content, 0, doc.Content.Length);
-        ms.Position = 0;
+        //var ms = new MemoryStream();
+        //ms.Write(doc.Content, 0, doc.Content.Length);
+        //ms.Position = 0;
 
-        return new ContentReference
-        {
-            ContentType = doc.ContentType,
-            FileName = doc.FileName,
-            Content = ms,
-        };
+        //return new ContentReference
+        //{
+        //    ContentType = doc.ContentType,
+        //    FileName = doc.FileName,
+        //    Content = ms,
+        //};
     }
 
     public async Task<ContentMetaDataReference?> GetContentMetaDataAsync(string path)
     {
-        var doc = await _db.Documents
-                           .Include(i => i.Data)
-                           .FirstOrDefaultAsync(d => d.FileName == path && d.ContainerName == ContainerName);
-        return doc == null ? null : new ContentMetaDataReference
-        {
-            FileName = doc.FileName,
-            ContentType = doc.ContentType,
-        };
+        //TODO: fix this
+        throw new NotImplementedException();
+        //var doc = await _db.Documents
+        //                   .Include(i => i.Data)
+        //                   .FirstOrDefaultAsync(d => d.FileName == path && d.ContainerName == ContainerName);
+        //return doc == null ? null : new ContentMetaDataReference
+        //{
+        //    FileName = doc.FileName,
+        //    ContentType = doc.ContentType,
+        //};
     }
 
     public IQueryable<ContentMetaDataReference> QueryContent() =>
@@ -69,68 +73,74 @@ public class ApplicationBlobContainerProvider : IBlobContainerProvider
 
     public async Task StoreContentAsync(ContentReference reference, Dictionary<string, string>? metaData = null, bool overwrite = false)
     {
-        var doc = await _db.Documents.FirstOrDefaultAsync(d => d.FileName == reference.FileName && d.ContainerName == ContainerName);
-        if (doc != null && !overwrite) throw new InvalidOperationException();
+        //TODO: fix this
+        throw new NotImplementedException();
 
-        using var ms = new MemoryStream();
-        await reference.Content.CopyToAsync(ms);
+        //var doc = await _db.Documents.FirstOrDefaultAsync(d => d.FileName == reference.FileName && d.ContainerName == ContainerName);
+        //if (doc != null && !overwrite) throw new InvalidOperationException();
 
-        if (doc != null)
-        {
-            //doc.FileName = reference.FileName;
-            doc.ContentType = reference.ContentType;
-            //doc.Hash = _hash.GetHash(reference.FileName);
-            doc.ContainerName = ContainerName;
-            doc.Content = ms.ToArray();
-        }
-        else
-        {
-            doc ??= new()
-            {
-                ContainerName = ContainerName,
-                Content = ms.ToArray(),
-                ContentType = reference.ContentType,
-                FileName = reference.FileName,
-                Hash = _hash.GetHash(reference.FileName),
-            };
-            _db.Documents.Add(doc);
-        }
+        //using var ms = new MemoryStream();
+        //await reference.Content.CopyToAsync(ms);
 
-        await _db.SaveChangesAsync();
+        //if (doc != null)
+        //{
+        //    //doc.FileName = reference.FileName;
+        //    doc.ContentType = reference.ContentType;
+        //    //doc.Hash = _hash.GetHash(reference.FileName);
+        //    doc.ContainerName = ContainerName;
+        //    doc.Content = ms.ToArray();
+        //}
+        //else
+        //{
+        //    doc ??= new()
+        //    {
+        //        ContainerName = ContainerName,
+        //        Content = ms.ToArray(),
+        //        ContentType = reference.ContentType,
+        //        FileName = reference.FileName,
+        //        Hash = _hash.GetHash(reference.FileName),
+        //    };
+        //    _db.Documents.Add(doc);
+        //}
 
-        if (metaData != null)
-        {
-            await StoreContentMetaDataAsync(new()
-            {
-                ContentType = reference.ContentType,
-                FileName = reference.FileName,
-                MetaData = metaData,
-            });
-        }
+        //await _db.SaveChangesAsync();
+
+        //if (metaData != null)
+        //{
+        //    await StoreContentMetaDataAsync(new()
+        //    {
+        //        ContentType = reference.ContentType,
+        //        FileName = reference.FileName,
+        //        MetaData = metaData,
+        //    });
+        //}
     }
 
     public async Task<bool> StoreContentMetaDataAsync(ContentMetaDataReference reference)
     {
-        var doc = await _db.Documents
-                           .Include(i => i.Data)
-                           .FirstOrDefaultAsync(d => d.FileName == reference.FileName && d.ContainerName == ContainerName);
-        if (doc == null) return false;
+        //TODO: fix this
+        throw new NotImplementedException();
 
-        //TODO: do something smarter
+        //var doc = await _db.Documents
+        //                   .Include(i => i.Data)
+        //                   .FirstOrDefaultAsync(d => d.FileName == reference.FileName && d.ContainerName == ContainerName);
+        //if (doc == null) return false;
 
-        doc.Data.Clear();
-        var data = from item in reference.MetaData
-                   select new DocumentData
-                   {
-                       Name = item.Key,
-                       Value = item.Value,
-                   };
-        foreach (var item in data)
-        {
-            doc.Data.Add(item);
-        }
-        await _db.SaveChangesAsync();
+        ////TODO: do something smarter
 
-        return true;
+        //doc.Data.Clear();
+        //var data = from item in reference.MetaData
+        //           select new DocumentData
+        //           {
+        //               Name = item.Key,
+        //               Value = item.Value,
+        //           };
+        //foreach (var item in data)
+        //{
+        //    doc.Data.Add(item);
+        //}
+        //await _db.SaveChangesAsync();
+
+        //return true;
     }
 }

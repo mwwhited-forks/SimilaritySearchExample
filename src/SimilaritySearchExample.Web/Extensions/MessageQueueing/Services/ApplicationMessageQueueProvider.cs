@@ -31,67 +31,73 @@ public class ApplicationMessageQueueProvider : IMessageReceiverProvider, IMessag
 
     public async Task<string?> SendAsync(object message, IMessageContext context)
     {
-        var queueName = context.Config["QueueName"];
-        var wrapped = new WrappedQueueMessage()
-        {
-            ContentType = "application/json;",
-            PayloadType = message.GetType().AssemblyQualifiedName ?? throw new NotSupportedException(),
-            CorrelationId = context.CorrelationId ?? "",
-            Payload = message,
-            Properties = context.Headers,
-        };
+        //TODO: fix this
+        throw new NotImplementedException();
 
-        var serialized = _serializer.Serialize(wrapped);
+        //var queueName = context.Config["QueueName"];
+        //var wrapped = new WrappedQueueMessage()
+        //{
+        //    ContentType = "application/json;",
+        //    PayloadType = message.GetType().AssemblyQualifiedName ?? throw new NotSupportedException(),
+        //    CorrelationId = context.CorrelationId ?? "",
+        //    Payload = message,
+        //    Properties = context.Headers,
+        //};
 
-        var entity = _db.MessageQueue.Add(new MessageQueue
-        {
-            MessageType = context.MessageType,
-            ChannelType = context.ChannelType,
-            CorrelationId = context.CorrelationId,
-            SentAt = context.SentAt,
-            SentFrom = context.SentFrom,
-            SentBy = context.SentBy,
-            SentId = context.SentId,
-            Content = serialized,
-            QueueName = queueName,
-        });
-        await _db.SaveChangesAsync();
+        //var serialized = _serializer.Serialize(wrapped);
 
-        return entity.Entity.Id.ToString();
+        //var entity = _db.MessageQueue.Add(new MessageQueue
+        //{
+        //    MessageType = context.MessageType,
+        //    ChannelType = context.ChannelType,
+        //    CorrelationId = context.CorrelationId,
+        //    SentAt = context.SentAt,
+        //    SentFrom = context.SentFrom,
+        //    SentBy = context.SentBy,
+        //    SentId = context.SentId,
+        //    Content = serialized,
+        //    QueueName = queueName,
+        //});
+        //await _db.SaveChangesAsync();
+
+        //return entity.Entity.Id.ToString();
     }
 
     public async Task RunAsync(CancellationToken cancellationToken = default)
     {
-        var newCancellationToken = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken).Token;
+        //TODO: fix this
+        throw new NotImplementedException();
 
-        while (!newCancellationToken.IsCancellationRequested)
-        {
-            //TODO: is it possible to create a read lock?
-            var queueName = _handlerProvider?.Config["QueueName"];
+        //var newCancellationToken = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken).Token;
 
-            var message = await _db.MessageQueue.Where(i => i.QueueName == queueName)
-                                   .OrderBy(i => i.Id)
-                                   .FirstOrDefaultAsync(newCancellationToken);
+        //while (!newCancellationToken.IsCancellationRequested)
+        //{
+        //    //TODO: is it possible to create a read lock?
+        //    var queueName = _handlerProvider?.Config["QueueName"];
 
-            if (message == null)
-            {
-                _logger.LogInformation($"Nothing Received waiting");
-                await Task.Delay(10000, cancellationToken);//TODO: move to config
-                continue;
-            }
+        //    var message = await _db.MessageQueue.Where(i => i.QueueName == queueName)
+        //                           .OrderBy(i => i.Id)
+        //                           .FirstOrDefaultAsync(newCancellationToken);
 
-            var messageId = message.Id.ToString();
+        //    if (message == null)
+        //    {
+        //        _logger.LogInformation($"Nothing Received waiting");
+        //        await Task.Delay(10000, cancellationToken);//TODO: move to config
+        //        continue;
+        //    }
 
-            var deserialized = _serializer.Deserialize<WrappedQueueMessage>(message.Content)
-                ?? throw new NotSupportedException($"No payload found");
+        //    var messageId = message.Id.ToString();
 
-            if (_handlerProvider != null)
-                await _handlerProvider.HandleAsync(deserialized, messageId);
+        //    var deserialized = _serializer.Deserialize<WrappedQueueMessage>(message.Content)
+        //        ?? throw new NotSupportedException($"No payload found");
 
-            _logger.LogInformation($"Dequeue: {{{nameof(messageId)}}}", messageId);
+        //    if (_handlerProvider != null)
+        //        await _handlerProvider.HandleAsync(deserialized, messageId);
 
-            _db.MessageQueue.Remove(message);
-            await _db.SaveChangesAsync(newCancellationToken);
-        }
+        //    _logger.LogInformation($"Dequeue: {{{nameof(messageId)}}}", messageId);
+
+        //    _db.MessageQueue.Remove(message);
+        //    await _db.SaveChangesAsync(newCancellationToken);
+        //}
     }
 }
