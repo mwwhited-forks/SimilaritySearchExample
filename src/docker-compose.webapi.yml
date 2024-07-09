@@ -7,6 +7,19 @@ services:
         environment:
         - ASPNETCORE_ENVIRONMENT=Development
         - HTTP_PORTS=80
+        - MessageQueue__EmailMessageModel__Config__ConnectionString=DefaultEndpointsProtocol=http;AccountName=devstoreaccount1;AccountKey=Eby8vdM02xNOcqFlqUwJPLlmEtlCDXJ1OUzFT50uSRZ6IFsuFq2UVErCz4I6tq/K1SZFPTOtr/KBHBeksoGMGw==;BlobEndpoint=http://similarity-search-azurite-1:10000/devstoreaccount1;QueueEndpoint=http://similarity-search-azurite-1:10001/devstoreaccount1;TableEndpoint=http://similarity-search-azurite-1:10002/devstoreaccount1
+        - MessageQueue__ReceivedEmailMessageModel__Config__ConnectionString=DefaultEndpointsProtocol=http;AccountName=devstoreaccount1;AccountKey=Eby8vdM02xNOcqFlqUwJPLlmEtlCDXJ1OUzFT50uSRZ6IFsuFq2UVErCz4I6tq/K1SZFPTOtr/KBHBeksoGMGw==;BlobEndpoint=http://similarity-search-azurite-1:10000/devstoreaccount1;QueueEndpoint=http://similarity-search-azurite-1:10001/devstoreaccount1;TableEndpoint=http://similarity-search-azurite-1:10002/devstoreaccount1
+        - MessageQueue__Resources__Config__ConnectionString=DefaultEndpointsProtocol=http;AccountName=devstoreaccount1;AccountKey=Eby8vdM02xNOcqFlqUwJPLlmEtlCDXJ1OUzFT50uSRZ6IFsuFq2UVErCz4I6tq/K1SZFPTOtr/KBHBeksoGMGw==;BlobEndpoint=http://similarity-search-azurite-1:10000/devstoreaccount1;QueueEndpoint=http://similarity-search-azurite-1:10001/devstoreaccount1;TableEndpoint=http://similarity-search-azurite-1:10002/devstoreaccount1
+        - MessageQueue__TextResources__Config__ConnectionString=DefaultEndpointsProtocol=http;AccountName=devstoreaccount1;AccountKey=Eby8vdM02xNOcqFlqUwJPLlmEtlCDXJ1OUzFT50uSRZ6IFsuFq2UVErCz4I6tq/K1SZFPTOtr/KBHBeksoGMGw==;BlobEndpoint=http://similarity-search-azurite-1:10000/devstoreaccount1;QueueEndpoint=http://similarity-search-azurite-1:10001/devstoreaccount1;TableEndpoint=http://similarity-search-azurite-1:10002/devstoreaccount1
+        - MessageQueue__Indexer__Config__ConnectionString=DefaultEndpointsProtocol=http;AccountName=devstoreaccount1;AccountKey=Eby8vdM02xNOcqFlqUwJPLlmEtlCDXJ1OUzFT50uSRZ6IFsuFq2UVErCz4I6tq/K1SZFPTOtr/KBHBeksoGMGw==;BlobEndpoint=http://similarity-search-azurite-1:10000/devstoreaccount1;QueueEndpoint=http://similarity-search-azurite-1:10001/devstoreaccount1;TableEndpoint=http://similarity-search-azurite-1:10002/devstoreaccount1
+        - ConnectionStrings__ResourceProfilerContext=Server=similarity-search-sql-server-1;Database=ResourceProfilerDb;User ID=sa;Password=S1m1l@1tyS3@rch;TrustServerCertificate=True;
+        - MailKitSmtpClientOptions__Host=similarity-search-smtp4dev-1
+        - MailKitImapClientOptions__Host=similarity-search-smtp4dev-1
+        - AzureBlobProviderOptions__ConnectionString=DefaultEndpointsProtocol=https;AccountName=devstoreaccount1;AccountKey=Eby8vdM02xNOcqFlqUwJPLlmEtlCDXJ1OUzFT50uSRZ6IFsuFq2UVErCz4I6tq/K1SZFPTOtr/KBHBeksoGMGw==;BlobEndpoint=http://similarity-search-azurite-1:10000/devstoreaccount1;
+        - QdrantOptions__Url=http://similarity-search-qdrant-1:6334
+        - SentenceEmbeddingOptions__Url=http://similarity-search-sbert-1:5000
+        - OllamaApiClientOptions__Url=http://similarity-search-ollama-1:11434
+        - ApacheTikaClientOptions__Url=http://similarity-search-apache-tika-1:9998
         # - HTTPS_PORTS=443
         build:
             dockerfile: DockerFile.webapi

@@ -5,8 +5,16 @@
 ## Notes
 
 To run the application execute the [build](../containers/build.bat) and then [up](../containers/up.bat) 
-scripts to start the dependant docker containers.  Then run [run](../src/run.bat) to build and start
+scripts to start the dependant docker containers.  
+
+Then run [run](../src/run.bat) to build and start
 the application.  To access the running application navigate to [swagger](http://localhost:5107/swagger/index.html)
+
+... or ...
+
+Then run [run-container](../src/run-container.bat) to build and start
+the application within docker.  To access the running application navigate to [swagger](http://127.0.0.1:7080/swagger/index.html)
+
 
 ## Processes
 
