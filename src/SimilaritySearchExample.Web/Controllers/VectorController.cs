@@ -24,24 +24,44 @@ public class VectorController : Controller
         _embedding = embedding;
     }
 
+    /// <summary>
+    /// list all vectors in the vector database
+    /// </summary>
+    /// <returns></returns>
     [HttpGet, HttpPost]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType((int)HttpStatusCode.NotFound)]
     public IAsyncEnumerable<SearchResultModel> List() =>
         _vectorStore.ListAsync();
 
+    /// <summary>
+    /// find nearest neighbor by vector value
+    /// </summary>
+    /// <param name="model"></param>
+    /// <returns></returns>
     [HttpPost]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType((int)HttpStatusCode.NotFound)]
     public IAsyncEnumerable<SearchResultModel> Query([FromBody] float[] model) =>
         _vectorStore.FindNeighborsAsync(model);
 
+    /// <summary>
+    /// find nearest content in from vector store
+    /// </summary>
+    /// <param name="model"></param>
+    /// <param name="groupBy">suggest &quot;Hash&quot;</param>
+    /// <returns></returns>
     [HttpPost]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType((int)HttpStatusCode.NotFound)]
     public IAsyncEnumerable<SearchResultModel> QueryGrouped([FromBody] float[] model, string groupBy) =>
         _vectorStore.FindNeighborsAsync(model, groupBy);
 
+    /// <summary>
+    /// perform embedding and lookup neighbors from vector store
+    /// </summary>
+    /// <param name="query"></param>
+    /// <returns></returns>
     [HttpGet]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType((int)HttpStatusCode.NotFound)]
@@ -52,6 +72,12 @@ public class VectorController : Controller
             yield return item;
     }
 
+    /// <summary>
+    /// perform embedding and lookup neighbors from vector store
+    /// </summary>
+    /// <param name="query"></param>
+    /// <param name="groupBy">suggest &quot;Hash&quot;</param>
+    /// <returns></returns>
     [HttpGet]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType((int)HttpStatusCode.NotFound)]

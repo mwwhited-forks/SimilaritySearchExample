@@ -7,6 +7,7 @@ paths:
     get:
       tags:
         - Document
+      summary: Query all content that has been uploaded to the blob store
       parameters:
         - name: currentPage
           in: query
@@ -65,6 +66,7 @@ paths:
     post:
       tags:
         - Document
+      summary: Query all content that has been uploaded to the blob store
       requestBody:
         content:
           application/json:
@@ -94,9 +96,11 @@ paths:
     get:
       tags:
         - Document
+      summary: download content from the blob store by file name
       parameters:
         - name: file
           in: query
+          description: ''
           schema:
             type: string
       responses:
@@ -123,9 +127,11 @@ paths:
     delete:
       tags:
         - Document
+      summary: remove an item from the blob store
       parameters:
         - name: file
           in: query
+          description: ''
           schema:
             type: string
       responses:
@@ -152,17 +158,21 @@ paths:
     post:
       tags:
         - Document
+      summary: upload new content to the blob store
       parameters:
         - name: file
           in: query
+          description: ''
           schema:
             type: string
         - name: sourceContentType
           in: query
+          description: ''
           schema:
             type: string
         - name: overwrite
           in: query
+          description: ''
           schema:
             type: boolean
             default: false
@@ -191,6 +201,7 @@ paths:
     put:
       tags:
         - Document
+      summary: add additional metadata to the blob store
       requestBody:
         content:
           multipart/form-data:
@@ -219,6 +230,7 @@ paths:
     get:
       tags:
         - Summaries
+      summary: list document summaries from the blob store
       parameters:
         - name: currentPage
           in: query
@@ -277,6 +289,7 @@ paths:
     post:
       tags:
         - Summaries
+      summary: list document summaries from the blob store
       requestBody:
         content:
           application/json:
@@ -306,9 +319,11 @@ paths:
     get:
       tags:
         - Summaries
+      summary: download summary from blob store by file name
       parameters:
         - name: file
           in: query
+          description: ''
           schema:
             type: string
       responses:
@@ -335,9 +350,11 @@ paths:
     delete:
       tags:
         - Summaries
+      summary: remove summary from blob store
       parameters:
         - name: file
           in: query
+          description: ''
           schema:
             type: string
       responses:
@@ -364,6 +381,7 @@ paths:
     put:
       tags:
         - Summaries
+      summary: add metadata to entry in blob store
       requestBody:
         content:
           multipart/form-data:
@@ -392,6 +410,7 @@ paths:
     get:
       tags:
         - TextDocument
+      summary: list text contented content from the blob store
       parameters:
         - name: currentPage
           in: query
@@ -450,6 +469,7 @@ paths:
     post:
       tags:
         - TextDocument
+      summary: list text contented content from the blob store
       requestBody:
         content:
           application/json:
@@ -479,9 +499,11 @@ paths:
     get:
       tags:
         - TextDocument
+      summary: download text content from the blob store
       parameters:
         - name: file
           in: query
+          description: ''
           schema:
             type: string
       responses:
@@ -508,9 +530,11 @@ paths:
     delete:
       tags:
         - TextDocument
+      summary: remove text content from the blob store
       parameters:
         - name: file
           in: query
+          description: ''
           schema:
             type: string
       responses:
@@ -537,6 +561,7 @@ paths:
     put:
       tags:
         - TextDocument
+      summary: add metadata to the text content in the blob store
       requestBody:
         content:
           multipart/form-data:
@@ -565,6 +590,7 @@ paths:
     get:
       tags:
         - Vector
+      summary: list all vectors in the vector database
       responses:
         '200':
           description: OK
@@ -591,6 +617,7 @@ paths:
     post:
       tags:
         - Vector
+      summary: list all vectors in the vector database
       responses:
         '200':
           description: OK
@@ -618,7 +645,9 @@ paths:
     post:
       tags:
         - Vector
+      summary: find nearest neighbor by vector value
       requestBody:
+        description: ''
         content:
           application/json:
             schema:
@@ -665,12 +694,15 @@ paths:
     post:
       tags:
         - Vector
+      summary: find nearest content in from vector store
       parameters:
         - name: groupBy
           in: query
+          description: suggest "Hash"
           schema:
             type: string
       requestBody:
+        description: ''
         content:
           application/json:
             schema:
@@ -717,9 +749,11 @@ paths:
     get:
       tags:
         - Vector
+      summary: perform embedding and lookup neighbors from vector store
       parameters:
         - name: query
           in: query
+          description: ''
           schema:
             type: string
       responses:
@@ -749,13 +783,16 @@ paths:
     get:
       tags:
         - Vector
+      summary: perform embedding and lookup neighbors from vector store
       parameters:
         - name: query
           in: query
+          description: ''
           schema:
             type: string
         - name: groupBy
           in: query
+          description: suggest "Hash"
           schema:
             type: string
       responses:

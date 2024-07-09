@@ -39,11 +39,14 @@
 		<None Include="$(SolutionDir)publish\**\*.*">
 			<Link>\src\publish\%(RecursiveDir)%(FileName)%(Extension)</Link>
 		</None>
+
 	</ItemGroup>
 
 	<ItemGroup>
-	  <None Remove="C:\Repos\Reference\SimilaritySearchExample\src\builddb.bat" />
-	  <None Remove="C:\Repos\Reference\SimilaritySearchExample\src\deploy-data.bat" />
+	  <None Include="..\..\.gitignore" Link=".gitignore" />
+	  <None Include="..\..\GitVersion.yml" Link="GitVersion.yml" />
+	  <None Include="..\..\LICENSE" Link="LICENSE" />
+	  <None Include="..\..\README.md" Link="README.md" />
 	</ItemGroup>
 
 </Project>
