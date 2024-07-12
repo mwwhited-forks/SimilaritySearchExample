@@ -4,6 +4,7 @@ import sys
 
 from flask import Flask, request, jsonify
 from sentence_transformers import SentenceTransformer
+import models
 
 arguments = sys.argv
 model_name_arg = arguments[1]
@@ -12,15 +13,6 @@ print(f"Loading Sentence Transformer: {model_name_arg}")
 app = Flask(__name__)
 model = SentenceTransformer(model_name_arg)
 
-def encode_text(texts):
-    # Prefix each text with "zapytanie: "
-    prefixed_texts = ["zapytanie: " + text for text in texts]
-    
-    # Encode the texts and convert to list
-    embeddings = model.encode(prefixed_texts, convert_to_tensor=True, show_progress_bar=False)
-    embeddings_list = embeddings.tolist()
-    
-    return embeddings_list
 
 @app.route('/v1/embeddings', methods=['POST'])
 def get_embeddings():
@@ -30,7 +22,7 @@ def get_embeddings():
     model_name = content.get('model', model_name_arg)
 
     # Encode the input text
-    embedding_list = encode_text([text_input])[0]
+    embedding_list = models.encode_text([text_input])[0]
 
     response = {
         "data": [
@@ -56,7 +48,7 @@ def generate_embedding():
     query = request.args.get('query')
     
     # Encode the query
-    embedding_list = encode_text([query])[0]
+    embedding_list = models.encode_text([query])[0]
 
     return jsonify(embedding=embedding_list)
 
@@ -66,7 +58,7 @@ def generate_multiple_embeddings():
     texts = request.json
     
     # Encode the multiple texts
-    embeddings_list = encode_text(texts)
+    embeddings_list = models.encode_text(texts)
 
     return jsonify(embeddings=embeddings_list)
     
@@ -74,6 +66,16 @@ def generate_multiple_embeddings():
 def health():
     print("GET /health")
     return f"SBERT Model: {model_name_arg}"
+
+@app.route('/similarity', methods=['POST'])
+def similarity():
+    data = request.get_json()
+    sentence1 = data.get('sentence1')
+    sentence2 = data.get('sentence2')
+    if not sentence1 or not sentence2:
+        return jsonify({'error': 'Both sentence1 and sentence2 are required.'}), 400
+    similarity_score = models.calculate_similarity(sentence1, sentence2)
+    return jsonify({'similarity_score': similarity_score})
 
 if __name__ == '__main__':
     from waitress import serve
