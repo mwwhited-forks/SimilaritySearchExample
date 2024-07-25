@@ -2,6 +2,8 @@
 using Eliassen.Documents;
 using Eliassen.MessageQueueing;
 using Eliassen.MessageQueueing.Services;
+using Eliassen.Ollama;
+using Microsoft.Extensions.Options;
 using SimilaritySearchExample.Web.Models;
 
 namespace SimilaritySearchExample.Web.Handlers;
@@ -13,13 +15,15 @@ public class TextResourceHandler : IMessageQueueHandler<TextResources>
     private readonly IMessageQueueSender<Indexer> _queue;
     private readonly IMessageCompletion _languageModel;
     private readonly ILogger _logger;
+    private readonly OllamaApiClientOptions _config;
 
     public TextResourceHandler(
         IBlobContainer<TextResources> source,
         IBlobContainer<Summaries> target,
         IMessageQueueSender<Indexer> queue,
         [FromKeyedServices("OLLAMA")] IMessageCompletion languageModel,
-        ILogger<TextResourceHandler> logger
+        ILogger<TextResourceHandler> logger,
+        IOptions<OllamaApiClientOptions> options
         )
     {
         _source = source;
@@ -27,6 +31,7 @@ public class TextResourceHandler : IMessageQueueHandler<TextResources>
         _queue = queue;
         _languageModel = languageModel;
         _logger = logger;
+        _config = options.Value;
     }
 
     public Task HandleAsync(object message, IMessageContext context) =>
@@ -61,11 +66,10 @@ public class TextResourceHandler : IMessageQueueHandler<TextResources>
             return;
         }
 
-        var systemPrompt = @"You are a tech recruiter whose job it is to summarize resumes from job applicants.
-If you add formatting do it in markdown";
+        var systemPrompt = @"Summerize the provided content";
         var summary = await _languageModel.GetCompletionAsync(new()
         {
-            Model = "phi",
+            Model = _config.DefaultModel ?? "phi",
             Prompt = prompt,
             System = systemPrompt,
         });

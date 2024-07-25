@@ -1,6 +1,6 @@
 FROM ollama/ollama
 
-ENV BASE_MODEL=llava-phi3
+ENV BASE_MODEL=phi
 
 COPY ./ollama/run-ollama.sh /tmp/
 
