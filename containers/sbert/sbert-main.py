@@ -55,12 +55,28 @@ def generate_embedding():
 @app.route('/generate-embeddings', methods=['POST'])
 def generate_multiple_embeddings():
     print("POST /generate-embeddings")
-    texts = request.json
     
-    # Encode the multiple texts
-    embeddings_list = models.encode_text(texts)
+    # Ensure the request contains a JSON array
+    if not request.is_json:
+        return jsonify({"error": "Request body must be JSON"}), 400
+    
+    texts = request.json
+    if not isinstance(texts, list) or not all(isinstance(text, str) for text in texts):
+        return jsonify({"error": "Input must be a JSON array of strings"}), 400
 
-    return jsonify(embeddings=embeddings_list)
+    try:
+        # Encode the texts
+        embeddings_list = models.encode_text(texts)
+        
+        # Structure the response
+        response = [
+            {"input": text, "embedding": embedding} 
+            for text, embedding in zip(texts, embeddings_list)
+        ]
+        return jsonify(response)
+    
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
     
 @app.route('/health', methods=['GET'])
 def health():
